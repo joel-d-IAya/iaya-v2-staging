@@ -1,0 +1,172 @@
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { fetchNews, getLocalizedContent, type NewsItem, ASSETS_URL, getUiLabels } from '../services/api';
+
+const TEXTS: Record<string, { title: string, subtitle: string }> = {
+    ES: { title: 'PULSE / NEWS', subtitle: 'Las últimas noticias de IA' },
+    EN: { title: 'PULSE / NEWS', subtitle: 'Latest AI News' },
+    FR: { title: 'PULSE / ACTUALITÉS', subtitle: 'Dernières nouvelles de l\'IA' }
+};
+
+const PulseIndicator = ({ label }: { label: string }) => (
+    <div className="flex items-center gap-2 mb-4">
+        <div className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-iaya-turquoise opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-iaya-turquoise"></span>
+        </div>
+        <span className="text-iaya-turquoise font-outfit font-bold text-xs tracking-[0.2em]">{label}</span>
+    </div>
+);
+
+const TimePill = ({ date, locale }: { date: string, locale: string }) => {
+    const labels = getUiLabels(locale);
+    const d = new Date(date);
+    const now = new Date();
+    const isToday = d.toDateString() === now.toDateString();
+
+    const yesterday = new Date();
+    yesterday.setDate(now.getDate() - 1);
+    const isYesterday = d.toDateString() === yesterday.toDateString();
+
+    const text = isToday ? labels.today : isYesterday ? labels.yesterday : d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
+
+    return (
+        <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[10px] text-white font-bold uppercase tracking-wider">
+            {text}
+        </span>
+    );
+};
+
+export default function PulseGrid({ locale }: { locale: string }) {
+    const [news, setNews] = useState<NewsItem[]>([]);
+    const [loading, setLoading] = useState(true);
+    const labels = getUiLabels(locale);
+
+    useEffect(() => {
+        fetchNews().then(data => {
+            setNews(data);
+            setLoading(false);
+        });
+    }, []);
+
+    const t = TEXTS[locale] || TEXTS.ES;
+
+    if (loading) return (
+        <section className="py-24 bg-iaya-bg">
+            <div className="max-w-7xl mx-auto px-8">
+                <div className="h-10 w-48 bg-white/5 rounded-lg mb-12 animate-pulse" />
+                <div className="grid grid-cols-12 gap-8">
+                    <div className="col-span-12 aspect-video bg-white/5 rounded-3xl animate-pulse" />
+                    {[1, 2, 3].map(i => (
+                        <div key={i} className="col-span-12 md:col-span-4 aspect-square bg-white/5 rounded-3xl animate-pulse" />
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+
+    const heroNews = news[0];
+    const historyFeed = news.slice(1, 4);
+
+    return (
+        <section id="pulse" className="py-24 bg-iaya-bg border-t border-white/5 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-8">
+                <div className="flex items-center justify-between mb-16">
+                    <div>
+                        <h2 className="text-4xl font-outfit font-bold text-white tracking-tighter mb-2">
+                            PULSE / <span className="text-iaya-orange">NEWS</span>
+                        </h2>
+                        <p className="text-white/40 font-inter text-sm">{t.subtitle}</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+                    {/* Hero News: 12 Columns */}
+                    {heroNews && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="col-span-1 md:col-span-12 group cursor-pointer"
+                            onClick={() => window.location.href = `/news/${heroNews.slug || heroNews.id}`}
+                        >
+                            <div className="relative aspect-video rounded-[32px] overflow-hidden border border-white/10 bg-white/5 mb-8">
+                                {heroNews.image && (
+                                    <img
+                                        src={`${ASSETS_URL}/${heroNews.image}`}
+                                        alt=""
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                                    />
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                                <div className="absolute top-8 left-8">
+                                    <TimePill date={heroNews.publish_date} locale={locale} />
+                                </div>
+                                <div className="absolute bottom-10 left-10 right-10">
+                                    <PulseIndicator label={labels.live} />
+                                    <h3 className="text-4xl sm:text-5xl font-outfit font-bold text-white mb-6 tracking-tight leading-tight group-hover:text-iaya-orange transition-colors">
+                                        {getLocalizedContent(heroNews, locale).title || "Untitled News"}
+                                    </h3>
+                                    <p className="text-white/70 font-inter text-lg max-w-3xl line-clamp-2">
+                                        {getLocalizedContent(heroNews, locale).summary || getLocalizedContent(heroNews, locale).content?.substring(0, 200).replace(/[#*]/g, '') + '...'}
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {/* History Feed: 3 Columns */}
+                    {historyFeed.map((item, idx) => {
+                        const content = getLocalizedContent(item, locale);
+                        const title = content.title || "Untitled News";
+                        const fullContent = content.full_content || content.content || "";
+                        const summary = fullContent.substring(0, 150).replace(/[#*]/g, '') + '...';
+
+                        return (
+                            <motion.div
+                                key={item.id}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 + idx * 0.1 }}
+                                viewport={{ once: true }}
+                                className="col-span-1 md:col-span-4 group cursor-pointer"
+                                onClick={() => window.location.href = `/news/${item.slug || item.id}`}
+                            >
+                                <div className="relative aspect-square rounded-[24px] overflow-hidden border border-white/10 bg-white/5 mb-6">
+                                    {item.image && (
+                                        <img
+                                            src={`${ASSETS_URL}/${item.image}`}
+                                            alt=""
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                    <div className="absolute top-6 left-6">
+                                        <TimePill date={item.publish_date} locale={locale} />
+                                    </div>
+                                </div>
+                                <div className="relative">
+                                    <h4 className="text-xl font-outfit font-bold text-white mb-4 line-clamp-2 group-hover:text-iaya-orange transition-colors">
+                                        {title}
+                                    </h4>
+                                    <div className="relative">
+                                        <p className="text-white/50 font-inter text-sm leading-relaxed line-clamp-3 mb-6">
+                                            {summary}
+                                        </p>
+                                        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-iaya-bg to-transparent pointer-events-none" />
+                                    </div>
+                                    <span className="inline-flex items-center gap-2 text-iaya-orange font-outfit font-bold text-xs uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                                        {labels.readMore}
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
+    );
+}

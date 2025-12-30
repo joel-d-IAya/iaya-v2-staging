@@ -6,10 +6,15 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                outfit: ['Outfit', 'sans-serif'],
+            },
             colors: {
-                'ia-bg': 'oklch(15% 0.02 260)',
-                'ia-orange': 'oklch(65% 0.20 45)',
-                'ia-turquoise': 'oklch(70% 0.15 190)',
+                'iaya-bg': 'oklch(15% 0.02 260)',
+                'iaya-nav': '#141B2D',
+                'iaya-orange': 'oklch(65% 0.20 45)',
+                'iaya-turquoise': 'oklch(70% 0.15 190)',
             },
         },
     },
