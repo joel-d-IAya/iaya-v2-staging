@@ -88,7 +88,11 @@ export default function PulseGrid({ locale }: { locale: string }) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             className="col-span-1 md:col-span-12 group cursor-pointer"
-                            onClick={() => window.location.href = `/news/${heroNews.slug || heroNews.id}`}
+                            onClick={() => {
+                                const content = getLocalizedContent(heroNews, locale);
+                                const slug = content.slug || heroNews.slug || heroNews.id;
+                                window.location.href = `/news/${slug}`;
+                            }}
                         >
                             <div className="relative aspect-video rounded-[32px] overflow-hidden border border-white/10 bg-white/5 mb-8">
                                 {heroNews.image && (
@@ -119,8 +123,10 @@ export default function PulseGrid({ locale }: { locale: string }) {
                     {historyFeed.map((item, idx) => {
                         const content = getLocalizedContent(item, locale);
                         const title = content.title || "Untitled News";
-                        const fullContent = content.full_content || content.content || "";
-                        const summary = fullContent.substring(0, 150).replace(/[#*]/g, '') + '...';
+                        const fullContentSource = content.full_content || content.content || "";
+                        // Extract exactly first 150 chars as requested
+                        const summary = fullContentSource.substring(0, 150).replace(/[#*]/g, '') + '...';
+                        const slug = content.slug || item.slug || item.id;
 
                         return (
                             <motion.div
@@ -130,7 +136,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                 transition={{ delay: 0.2 + idx * 0.1 }}
                                 viewport={{ once: true }}
                                 className="col-span-1 md:col-span-4 group cursor-pointer"
-                                onClick={() => window.location.href = `/news/${item.slug || item.id}`}
+                                onClick={() => window.location.href = `/news/${slug}`}
                             >
                                 <div className="relative aspect-square rounded-[24px] overflow-hidden border border-white/10 bg-white/5 mb-6">
                                     {item.image && (

@@ -105,7 +105,7 @@ export const getUiLabels = (currentLang: string) => {
     return {
         cta: 'Descubrir más',
         readMore: 'Leer más',
-        live: 'RECIENTE',
+        live: 'RECIE-NTE',
         today: 'Hoy',
         yesterday: 'Ayer'
     }; // Default to ES
