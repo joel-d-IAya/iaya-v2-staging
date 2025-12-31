@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/cms-api': {
-        target: 'https://cms.iaya.cloud',
+        target: process.env.VITE_DIRECTUS_URL || 'https://cms.iaya.cloud',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/cms-api/, ''),
       },

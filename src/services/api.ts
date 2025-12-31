@@ -1,5 +1,5 @@
-const API_URL = '/cms-api';
-export const ASSETS_URL = 'https://cms.iaya.cloud/assets';
+const API_URL = import.meta.env.VITE_DIRECTUS_URL || '/cms-api';
+export const ASSETS_URL = `${import.meta.env.VITE_DIRECTUS_URL || 'https://cms.iaya.cloud'}/assets`;
 
 // --- Types ---
 
@@ -121,8 +121,14 @@ export const getAccentColor = (colorName: string): string => {
 // --- API Calls ---
 
 async function fetcher<T>(endpoint: string): Promise<T[]> {
+    const token = import.meta.env.VITE_DIRECTUS_TOKEN;
+    const headers: Record<string, string> = {};
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     try {
-        const response = await fetch(`${API_URL}/items/${endpoint}`);
+        const response = await fetch(`${API_URL}/items/${endpoint}`, { headers });
         if (!response.ok) throw new Error(`Fetch Error: ${response.status}`);
         const json = await response.json();
         return json.data || [];
