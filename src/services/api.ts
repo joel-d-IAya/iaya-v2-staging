@@ -16,6 +16,7 @@ export interface Translation {
     recreo_content?: string;
     full_content?: string;
     slug?: string;
+    nexus?: string;
 }
 
 export interface Service {

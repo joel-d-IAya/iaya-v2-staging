@@ -126,7 +126,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                             <span className="text-[10px] font-outfit font-bold uppercase tracking-[0.2em] text-iaya-orange">Nexus Insight</span>
                                         </div>
                                         <p className="text-white/80 font-inter text-lg leading-relaxed italic">
-                                            {getLocalizedContent(heroNews, locale).summary}
+                                            {getLocalizedContent(heroNews, locale).nexus || getLocalizedContent(heroNews, locale).summary}
                                         </p>
                                     </div>
                                 </div>
