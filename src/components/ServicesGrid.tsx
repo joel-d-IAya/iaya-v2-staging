@@ -14,9 +14,9 @@ const TEXTS: Record<string, { badge: string; title: string }> = {
     FR: { badge: 'Notre Expertise', title: 'Services de Classe Mondiale' }
 };
 
-const SkeletonCard = ({ index }: { index: number }) => (
+const SkeletonCard = () => (
     <div
-        className={`rounded-[32px] bg-white/5 border border-white/10 h-[400px] animate-pulse ${index % 3 === 0 ? 'col-span-8' : 'col-span-4'}`}
+        className="rounded-[32px] bg-white/5 border border-white/10 h-[400px] animate-pulse md:col-span-4 col-span-12"
     />
 );
 
@@ -64,18 +64,12 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
                     <AnimatePresence mode="popLayout" initial={false}>
                         {loading ? (
                             Array.from({ length: 3 }).map((_, i) => (
-                                <SkeletonCard key={i} index={i} />
+                                <SkeletonCard key={i} />
                             ))
                         ) : (
                             services.map((service, index) => {
-                                // Rule of 3 harmonious layout: One big (8), one small (4), one full (12)
-                                const homeClasses = [
-                                    'md:col-span-8 col-span-12',
-                                    'md:col-span-4 col-span-12',
-                                    'col-span-12'
-                                ];
                                 return (
-                                    <div key={service.id || index} className={homeClasses[index] || 'col-span-4'}>
+                                    <div key={service.id || index} className="md:col-span-4 col-span-12">
                                         <ServiceCard
                                             service={service}
                                             locale={locale}
@@ -86,6 +80,20 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
                             })
                         )}
                     </AnimatePresence>
+                </div>
+                <div className="mt-20 flex justify-center">
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-10 py-5 rounded-full bg-white text-iaya-bg font-outfit font-bold text-lg hover:bg-iaya-orange hover:text-white transition-all duration-300 shadow-xl shadow-iaya-orange/10"
+                        onClick={() => window.location.href = '/services'}
+                    >
+                        {locale === 'ES' && 'Descubrir todos nuestros servicios'}
+                        {locale === 'EN' && 'Discover all our Services'}
+                        {locale === 'FR' && 'Découvrir tous nos services'}
+                    </motion.button>
                 </div>
             </div>
         </section>

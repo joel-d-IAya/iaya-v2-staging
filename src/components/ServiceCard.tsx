@@ -124,7 +124,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
                         className="h-1.5 mb-8 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                         style={{ backgroundColor: accentColor }}
                     />
-                    <h3 className="text-3xl sm:text-5xl font-outfit font-bold text-white mb-6 tracking-tight leading-[1.1]">
+                    <h3 className="text-2xl sm:text-3xl font-outfit font-bold text-white mb-6 tracking-tight leading-[1.1]">
                         {title}
                     </h3>
                     <p className="font-inter text-white/70 leading-relaxed text-lg max-w-[90%] font-light">

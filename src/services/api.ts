@@ -1,5 +1,7 @@
 const API_URL = import.meta.env.VITE_DIRECTUS_URL || '/cms-api';
-export const ASSETS_URL = `${import.meta.env.VITE_DIRECTUS_URL || 'https://cms.iaya.cloud'}/assets`;
+export const ASSETS_URL = import.meta.env.VITE_DIRECTUS_URL
+    ? `${import.meta.env.VITE_DIRECTUS_URL}/assets`
+    : `/cms-api/assets`;
 
 // --- Types ---
 
@@ -91,24 +93,30 @@ export const getUiLabels = (currentLang: string) => {
     if (lang === 'fr') return {
         cta: 'Découvrir plus',
         readMore: 'En savoir plus',
-        live: 'DIRECT',
+        live: 'Dernière information',
         today: 'Aujourd\'hui',
         yesterday: 'Hier'
     };
     if (lang === 'en') return {
         cta: 'Discover more',
         readMore: 'Read more',
-        live: 'LIVE',
+        live: 'Last news',
         today: 'Today',
         yesterday: 'Yesterday'
     };
     return {
         cta: 'Descubrir más',
         readMore: 'Leer más',
-        live: 'RECIE-NTE',
+        live: 'Última noticia',
         today: 'Hoy',
         yesterday: 'Ayer'
     }; // Default to ES
+};
+
+export const getAssetUrl = (id: string | undefined): string => {
+    if (!id) return '';
+    // We now use the proxy with automatic Authorization header
+    return `${ASSETS_URL}/${id}`;
 };
 
 export const getAccentColor = (colorName: string): string => {

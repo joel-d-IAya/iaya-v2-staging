@@ -23,8 +23,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Noticias diarias del mundo de la Inteligencia Artificial. No te pierdas las últimas novedades.",
             ctaText: "Leer más",
             ctaStyle: 'outline',
-            color: 'oklch(65% 0.2 45 / 15%)',
-            auraColor: 'oklch(65% 0.2 45 / 40%)',
+            color: 'oklch(70% 0.25 45 / 30%)',
+            auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
         },
         {
@@ -33,8 +33,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Soluciones a medida: Capacitación, Agentes IA y Automatización estratégica.",
             ctaText: "Ver Soluciones",
             ctaStyle: 'solid',
-            color: 'oklch(70% 0.15 190 / 15%)',
-            auraColor: 'oklch(70% 0.15 190 / 40%)',
+            color: 'oklch(75% 0.22 190 / 30%)',
+            auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
         },
         {
@@ -43,8 +43,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Una agencia de IA diferente con un anclaje local y un enfoque humano.",
             ctaText: "Iniciar Proyecto",
             ctaStyle: 'primary',
-            color: 'oklch(25% 0.05 250 / 40%)',
-            auraColor: 'oklch(65% 0.20 45 / 40%)',
+            color: 'oklch(40% 0.15 250 / 50%)',
+            auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
         },
@@ -54,8 +54,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Aprende más de la inteligencia artificial gracias a nuestras anécdotas y experimentos diarios.",
             ctaText: "Descubrir",
             ctaStyle: 'ghost',
-            color: 'oklch(50% 0.15 280 / 15%)',
-            auraColor: 'oklch(50% 0.15 280 / 40%)',
+            color: 'oklch(65% 0.22 280 / 30%)',
+            auraColor: 'oklch(65% 0.3 280 / 60%)',
             baseRotation: 4,
         },
         {
@@ -64,8 +64,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "¿Quieres conocer mejor nuestro ecosistema? Agendemos una sesión de descubrimiento hoy.",
             ctaText: "Agendar Cita",
             ctaStyle: 'cyan',
-            color: 'oklch(90% 0.02 250 / 20%)',
-            auraColor: 'oklch(90% 0.02 250 / 60%)',
+            color: 'oklch(94% 0.08 250 / 35%)',
+            auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
         }
     ],
@@ -76,8 +76,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Daily updates from the AI world. Stay ahead with the latest innovation.",
             ctaText: "Read more",
             ctaStyle: 'outline',
-            color: 'oklch(65% 0.2 45 / 15%)',
-            auraColor: 'oklch(65% 0.2 45 / 40%)',
+            color: 'oklch(70% 0.25 45 / 30%)',
+            auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
         },
         {
@@ -86,8 +86,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Custom solutions: Training, AI Agents, and Strategic Automation.",
             ctaText: "View Solutions",
             ctaStyle: 'solid',
-            color: 'oklch(70% 0.15 190 / 15%)',
-            auraColor: 'oklch(70% 0.15 190 / 40%)',
+            color: 'oklch(75% 0.22 190 / 30%)',
+            auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
         },
         {
@@ -96,8 +96,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "A different AI agency with local roots and a human-centered approach.",
             ctaText: "Start Project",
             ctaStyle: 'primary',
-            color: 'oklch(25% 0.05 250 / 40%)',
-            auraColor: 'oklch(65% 0.20 45 / 40%)',
+            color: 'oklch(40% 0.15 250 / 50%)',
+            auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
         },
@@ -107,8 +107,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Learn more about AI through our daily experiments and stories.",
             ctaText: "Discover",
             ctaStyle: 'ghost',
-            color: 'oklch(50% 0.15 280 / 15%)',
-            auraColor: 'oklch(50% 0.15 280 / 40%)',
+            color: 'oklch(65% 0.22 280 / 30%)',
+            auraColor: 'oklch(65% 0.3 280 / 60%)',
             baseRotation: 4,
         },
         {
@@ -117,8 +117,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Want to learn more about our ecosystem? Book a discovery session today.",
             ctaText: "Book Now",
             ctaStyle: 'cyan',
-            color: 'oklch(90% 0.02 250 / 20%)',
-            auraColor: 'oklch(90% 0.02 250 / 60%)',
+            color: 'oklch(94% 0.08 250 / 35%)',
+            auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
         }
     ],
@@ -129,8 +129,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Mises à jour quotidiennes du monde de l'IA. Ne manquez pas les dernières innovations.",
             ctaText: "En savoir plus",
             ctaStyle: 'outline',
-            color: 'oklch(65% 0.2 45 / 15%)',
-            auraColor: 'oklch(65% 0.2 45 / 40%)',
+            color: 'oklch(70% 0.25 45 / 30%)',
+            auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
         },
         {
@@ -139,8 +139,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Solutions sur mesure : Formation, Agents IA et Automatisation stratégique.",
             ctaText: "Solutions",
             ctaStyle: 'solid',
-            color: 'oklch(70% 0.15 190 / 15%)',
-            auraColor: 'oklch(70% 0.15 190 / 40%)',
+            color: 'oklch(75% 0.22 190 / 30%)',
+            auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
         },
         {
@@ -149,8 +149,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Une agence d'IA différente avec un ancrage local et une approche humaine.",
             ctaText: "Démarrer",
             ctaStyle: 'primary',
-            color: 'oklch(25% 0.05 250 / 40%)',
-            auraColor: 'oklch(65% 0.20 45 / 40%)',
+            color: 'oklch(40% 0.15 250 / 50%)',
+            auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
         },
@@ -160,8 +160,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Apprenez-en plus sur l'IA grâce à nos anecdotes et expériences quotidiennes.",
             ctaText: "Découvrir",
             ctaStyle: 'ghost',
-            color: 'oklch(50% 0.15 280 / 15%)',
-            auraColor: 'oklch(50% 0.15 280 / 40%)',
+            color: 'oklch(65% 0.22 280 / 30%)',
+            auraColor: 'oklch(65% 0.3 280 / 60%)',
             baseRotation: 4,
         },
         {
@@ -170,8 +170,8 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             body: "Vous voulez découvrir notre écosystème ? Prenez rendez-vous dès aujourd'hui.",
             ctaText: "Contact",
             ctaStyle: 'cyan',
-            color: 'oklch(90% 0.02 250 / 20%)',
-            auraColor: 'oklch(90% 0.02 250 / 60%)',
+            color: 'oklch(94% 0.08 250 / 35%)',
+            auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
         }
     ]
@@ -457,14 +457,14 @@ export default function Hero({ locale = 'ES' }: { locale?: string }) {
 
             <motion.div
                 style={{ x: mouseX, y: mouseY, rotateX, rotateY, perspective: 1200 }}
-                className="relative z-20 w-full max-w-7xl h-[450px] flex items-center justify-center -translate-y-[60px]"
+                className="relative z-10 w-full max-w-[90vw] h-[450px] flex items-center justify-center -translate-y-[60px]"
             >
                 <AnimatePresence mode="popLayout" initial={false}>
                     {[-2, -1, 1, 2, 0].map((offset) => {
                         const card = getCardAt(offset);
                         const isActive = offset === 0;
 
-                        const xPos = offset * (isActive ? 0 : 450);
+                        const xPos = offset * (isActive ? 0 : 250);
                         const zIndex = isActive ? 50 : 40 - Math.abs(offset);
                         const scale = isActive ? 1.1 : 0.85;
                         const rotation = offset * 4;
@@ -500,13 +500,13 @@ export default function Hero({ locale = 'ES' }: { locale?: string }) {
                     y: mountainsY,
                     bottom: '0px',
                 }}
-                className="absolute left-0 w-full z-10 pointer-events-none"
+                className="absolute left-0 w-full z-50 pointer-events-none"
             >
                 <div className="mountain-container relative w-full flex justify-center translate-y-[-35px]">
                     <img
                         src={andes}
                         alt="Andes Mountains"
-                        className="w-full max-w-7xl h-auto object-contain opacity-40 relative z-10"
+                        className="w-full max-w-7xl h-auto object-contain opacity-100 relative z-10"
                         style={{ transform: 'translateY(-10px)' }}
                     />
                     {/* Shadow/Anchor at the base */}

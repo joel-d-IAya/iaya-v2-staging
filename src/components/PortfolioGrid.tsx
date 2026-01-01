@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchProjects, getLocalizedContent, type Project, ASSETS_URL } from '../services/api';
+import { fetchProjects, getLocalizedContent, type Project, getAssetUrl } from '../services/api';
 
 const TEXTS: Record<string, string> = {
     ES: 'Casos de Éxito',
@@ -53,7 +53,7 @@ export default function PortfolioGrid({ locale }: { locale: string }) {
                                 <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-8 border border-white/5 bg-white/5">
                                     {project.image && (
                                         <img
-                                            src={`${ASSETS_URL}/${project.image}`}
+                                            src={getAssetUrl(project.image)}
                                             alt=""
                                             className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                         />

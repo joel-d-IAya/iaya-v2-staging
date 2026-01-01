@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchNews, getLocalizedContent, type NewsItem, ASSETS_URL, getUiLabels } from '../services/api';
+import { fetchNews, getLocalizedContent, type NewsItem, getUiLabels, getAssetUrl } from '../services/api';
 
 const TEXTS: Record<string, { title: string, subtitle: string }> = {
     ES: { title: 'PULSE / NEWS', subtitle: 'Las últimas noticias de IA' },
@@ -81,38 +81,60 @@ export default function PulseGrid({ locale }: { locale: string }) {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-                    {/* Hero News: 12 Columns */}
+                    {/* Hero News: Redesigned Layout */}
                     {heroNews && (
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="col-span-1 md:col-span-12 group cursor-pointer"
-                            onClick={() => {
-                                const content = getLocalizedContent(heroNews, locale);
-                                const slug = content.slug || heroNews.slug || heroNews.id;
-                                window.location.href = `/news/${slug}`;
-                            }}
+                            className="col-span-1 md:col-span-12 group"
                         >
-                            <div className="relative aspect-video rounded-[32px] overflow-hidden border border-white/10 bg-white/5 mb-8">
-                                {heroNews.image && (
-                                    <img
-                                        src={`${ASSETS_URL}/${heroNews.image}`}
-                                        alt=""
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                                    />
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                                <div className="absolute top-8 left-8">
+                            <div className="relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 p-8 md:p-12">
+                                <div className="absolute top-8 right-8 z-20">
                                     <TimePill date={heroNews.publish_date} locale={locale} />
                                 </div>
-                                <div className="absolute bottom-10 left-10 right-10">
-                                    <PulseIndicator label={labels.live} />
-                                    <h3 className="text-4xl sm:text-5xl font-outfit font-bold text-white mb-6 tracking-tight leading-tight group-hover:text-iaya-orange transition-colors">
-                                        {getLocalizedContent(heroNews, locale).title || "Untitled News"}
-                                    </h3>
-                                    <p className="text-white/70 font-inter text-lg max-w-3xl line-clamp-2">
-                                        {getLocalizedContent(heroNews, locale).summary || getLocalizedContent(heroNews, locale).content?.substring(0, 200).replace(/[#*]/g, '') + '...'}
+
+                                {/* 1. Title at the top */}
+                                <PulseIndicator label={labels.live} />
+                                <h3
+                                    className="text-3xl sm:text-5xl font-outfit font-bold text-white mb-10 tracking-tight leading-tight cursor-pointer hover:text-iaya-orange transition-colors"
+                                    onClick={() => {
+                                        const content = getLocalizedContent(heroNews, locale);
+                                        const slug = content.slug || heroNews.slug || heroNews.id;
+                                        window.location.href = `/news/${slug}`;
+                                    }}
+                                >
+                                    {getLocalizedContent(heroNews, locale).title || "Untitled News"}
+                                </h3>
+
+                                {/* 2. Row: Image (16:9) and Summary (Nexus) */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 items-start">
+                                    <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/5 bg-black/20">
+                                        {(heroNews.image) && (
+                                            <img
+                                                src={getAssetUrl(heroNews.image)}
+                                                alt=""
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                                            />
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                                    </div>
+
+                                    <div className="flex flex-col justify-center h-full">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="h-[1px] w-8 bg-iaya-orange" />
+                                            <span className="text-[10px] font-outfit font-bold uppercase tracking-[0.2em] text-iaya-orange">Nexus Insight</span>
+                                        </div>
+                                        <p className="text-white/80 font-inter text-lg leading-relaxed italic">
+                                            {getLocalizedContent(heroNews, locale).summary}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* 3. Full Content below */}
+                                <div className="prose prose-invert max-w-none">
+                                    <p className="text-white/60 font-inter text-base leading-relaxed whitespace-pre-line">
+                                        {getLocalizedContent(heroNews, locale).content}
                                     </p>
                                 </div>
                             </div>
@@ -141,7 +163,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                 <div className="relative aspect-square rounded-[24px] overflow-hidden border border-white/10 bg-white/5 mb-6">
                                     {item.image && (
                                         <img
-                                            src={`${ASSETS_URL}/${item.image}`}
+                                            src={getAssetUrl(item.image)}
                                             alt=""
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
@@ -173,6 +195,6 @@ export default function PulseGrid({ locale }: { locale: string }) {
                     })}
                 </div>
             </div>
-        </section>
+        </section >
     );
 }
