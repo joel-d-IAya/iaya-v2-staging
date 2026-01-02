@@ -27,6 +27,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
 
     const title = content?.title || "Untitled Service";
     const summary = content?.summary || "No description available";
+    const serviceSlug = service.slug || content?.slug || service.id;
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!cardRef.current) return;
@@ -68,7 +69,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
     };
 
     return (
-        <Link to={`/services/${service.slug || service.id}`} className="block h-full group">
+        <Link to={`/services/${serviceSlug}`} className="block h-full group">
             <motion.div
                 ref={cardRef}
                 variants={cardVariants}
@@ -78,7 +79,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
                 onMouseMove={handleMouseMove}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={handleMouseLeave}
-                className="relative rounded-[32px] overflow-hidden p-10 flex flex-col justify-between min-h-[400px] w-full h-full transition-all duration-500"
+                className="relative rounded-[32px] overflow-hidden p-10 flex flex-col min-h-[400px] w-full h-full transition-all duration-500"
                 style={{
                     rotateX,
                     rotateY,
@@ -115,9 +116,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
                     }}
                 />
 
-                {/* Content Container with parallax-y feel */}
-                <div className="relative z-30 flex flex-col h-full" style={{ transform: "translateZ(30px)" }}>
-                    <div>
+                {/* Content Container - Ensure flex-1 to fill space */}
+                <div className="relative z-30 flex flex-col flex-1" style={{ transform: "translateZ(30px)" }}>
+                    <div className="flex-1">
                         <div className="flex justify-between items-start mb-8">
                             <motion.div
                                 initial={{ width: 0 }}
@@ -140,7 +141,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
                         </p>
                     </div>
 
-                    <div className="mt-12">
+                    <div className="mt-auto pt-10">
                         <div
                             className="inline-block px-10 py-4 rounded-full overflow-hidden transition-all duration-300 border border-white/10 group-hover:border-transparent relative"
                         >

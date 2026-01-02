@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import ServicePage from './pages/ServicePage'
+import ServicesIndexPage from './pages/ServicesIndexPage'
 import { initApp } from './services/api'
 import logo from './assets/topnav_IAya.png'
 
@@ -20,6 +21,7 @@ function App() {
       <main className="relative">
         <Routes>
           <Route path="/" element={<HomePage activeLang={activeLang} />} />
+          <Route path="/services" element={<ServicesIndexPage activeLang={activeLang} />} />
           <Route path="/services/:slug" element={<ServicePage activeLang={activeLang} />} />
           <Route path="/services/:slug/:subSlug" element={<ServicePage activeLang={activeLang} />} />
         </Routes>

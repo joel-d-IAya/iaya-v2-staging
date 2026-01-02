@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import type { Service } from '../services/api';
 import { fetchServices } from '../services/api';
 import ServiceCard from './ServiceCard';
@@ -82,18 +83,19 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
                     </AnimatePresence>
                 </div>
                 <div className="mt-20 flex justify-center">
-                    <motion.button
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-10 py-5 rounded-full bg-white text-iaya-bg font-outfit font-bold text-lg hover:bg-iaya-orange hover:text-white transition-all duration-300 shadow-xl shadow-iaya-orange/10"
-                        onClick={() => window.location.href = '/services'}
-                    >
-                        {locale === 'ES' && 'Descubrir todos nuestros servicios'}
-                        {locale === 'EN' && 'Discover all our Services'}
-                        {locale === 'FR' && 'Découvrir tous nos services'}
-                    </motion.button>
+                    <Link to="/services">
+                        <motion.button
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-10 py-5 rounded-full bg-white text-iaya-bg font-outfit font-bold text-lg hover:bg-iaya-orange hover:text-white transition-all duration-300 shadow-xl shadow-iaya-orange/10"
+                        >
+                            {locale === 'ES' && 'Descubrir todos nuestros servicios'}
+                            {locale === 'EN' && 'Discover all our Services'}
+                            {locale === 'FR' && 'Découvrir tous nos services'}
+                        </motion.button>
+                    </Link>
                 </div>
             </div>
         </section>

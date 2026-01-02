@@ -150,6 +150,8 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             {service.sub_services.map((sub, idx) => {
                                 const subContent = getLocalizedContent(sub, activeLang);
+                                // Determine the subSlug properly
+                                const subSlugField = sub.slug || subContent.slug || sub.id;
                                 // Simple logic for span: every 3rd item spans 2
                                 const colSpan = idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1';
 
@@ -160,7 +162,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: idx * 0.1 }}
-                                        className={`${colSpan} bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all group relative overflow-hidden`}
+                                        className={`${colSpan} bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all group relative overflow-hidden flex flex-col`}
                                     >
                                         <div
                                             className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
@@ -179,8 +181,8 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                                         </p>
 
                                         <Link
-                                            to={`/services/${slug}/${sub.slug}`}
-                                            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:gap-4 transition-all"
+                                            to={`/services/${slug}/${subSlugField}`}
+                                            className="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:gap-4 transition-all"
                                             style={{ color: accentColor }}
                                         >
                                             Découvrir <span className="text-xl">→</span>

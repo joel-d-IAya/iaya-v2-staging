@@ -151,15 +151,32 @@ async function fetcher<T>(endpoint: string): Promise<T[]> {
 }
 
 export const fetchServices = async () => {
-    const data = await fetcher<Service>('services?fields=*,translations.*,home_size.tailwind_class&filter[show_on_home][_eq]=true');
-    // Ensure "Formation, Agents, Automation" order and limit to 3 strictly
+    const data = await fetcher<Service>('services?fields=id,slug,main_icon,accent_color,translations.*,home_size.tailwind_class&filter[show_on_home][_eq]=true');
     return data
         .filter(s => !(s as any).internal_name?.includes('MARKETING'))
         .slice(0, 3);
 };
 
+export const fetchAllServices = async () => {
+    const data = await fetcher<Service>('services?fields=id,slug,main_icon,accent_color,translations.*,sub_services.*,sub_services.translations.*');
+    return data.filter(s => !(s as any).internal_name?.includes('MARKETING'));
+};
+
 export const fetchServiceBySlug = async (slug: string) => {
-    const data = await fetcher<Service>(`services?fields=*,translations.*,sub_services.*,sub_services.translations.*&filter[slug][_eq]=${slug}`);
+    const encodedSlug = encodeURIComponent(slug);
+    // 1. Try filtering by top-level slug field
+    let data = await fetcher<Service>(`services?fields=id,slug,main_icon,accent_color,translations.*,sub_services.*,sub_services.translations.*&filter[slug][_eq]=${encodedSlug}`);
+
+    // 2. If not found, try searching in translations
+    if (data.length === 0) {
+        data = await fetcher<Service>(`services?fields=id,slug,main_icon,accent_color,translations.*,sub_services.*,sub_services.translations.*&filter[translations][slug][_eq]=${encodedSlug}`);
+    }
+
+    // 3. Fallback search by ID if slug is numeric
+    if (data.length === 0 && !isNaN(Number(slug))) {
+        data = await fetcher<Service>(`services?fields=id,slug,main_icon,accent_color,translations.*,sub_services.*,sub_services.translations.*&filter[id][_eq]=${encodedSlug}`);
+    }
+
     return data[0] || null;
 };
 
