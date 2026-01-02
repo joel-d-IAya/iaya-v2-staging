@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import logo from '../assets/topnav_IAya.png';
 
 const LANGUAGES = [
@@ -18,25 +19,25 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
 
     const NAV_TEXTS: Record<string, any> = {
         ES: [
-            { name: 'Servicios', href: '#servicios' },
-            { name: 'Portafolio', href: '#portfolio' },
-            { name: 'Noticias', href: '#pulse' },
-            { name: 'Recreo', href: '#recreo' },
-            { name: 'Contacto', href: '#contacto' },
+            { name: 'Servicios', href: '/#servicios' },
+            { name: 'Portafolio', href: '/#portfolio' },
+            { name: 'Noticias', href: '/#pulse' },
+            { name: 'Recreo', href: '/#recreo' },
+            { name: 'Contacto', href: '/#contacto' },
         ],
         EN: [
-            { name: 'Services', href: '#servicios' },
-            { name: 'Portfolio', href: '#portfolio' },
-            { name: 'News', href: '#pulse' },
-            { name: 'Recreo', href: '#recreo' },
-            { name: 'Contact', href: '#contacto' },
+            { name: 'Services', href: '/#servicios' },
+            { name: 'Portfolio', href: '/#portfolio' },
+            { name: 'News', href: '/#pulse' },
+            { name: 'Recreo', href: '/#recreo' },
+            { name: 'Contact', href: '/#contacto' },
         ],
         FR: [
-            { name: 'Services', href: '#servicios' },
-            { name: 'Portfolio', href: '#portfolio' },
-            { name: 'Actualités', href: '#pulse' },
-            { name: 'Récréation', href: '#recreo' },
-            { name: 'Contact', href: '#contacto' },
+            { name: 'Services', href: '/#servicios' },
+            { name: 'Portfolio', href: '/#portfolio' },
+            { name: 'Actualités', href: '/#pulse' },
+            { name: 'Récréation', href: '/#recreo' },
+            { name: 'Contact', href: '/#contacto' },
         ]
     };
 
@@ -47,9 +48,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
         <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-7xl">
             <div className="flex items-center justify-between px-8 py-3 bg-[#141B2D] backdrop-blur-[12px] border border-white/10 rounded-full shadow-2xl">
                 {/* Logo */}
-                <div className="flex-shrink-0">
+                <Link to="/" className="flex-shrink-0">
                     <img src={logo} alt="IAya Logo" className="h-10 w-auto object-contain cursor-pointer" />
-                </div>
+                </Link>
 
                 {/* Navigation Links */}
                 <div className="hidden lg:flex items-center gap-8">

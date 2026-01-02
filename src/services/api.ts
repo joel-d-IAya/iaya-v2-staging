@@ -21,11 +21,14 @@ export interface Translation {
 
 export interface Service {
     id: string;
+    slug?: string;
+    main_icon?: string;
     home_size?: {
         tailwind_class: string;
     };
     accent_color: string;
     translations: Translation[];
+    sub_services?: Service[];
 }
 
 export interface NewsItem {
@@ -150,10 +153,14 @@ async function fetcher<T>(endpoint: string): Promise<T[]> {
 export const fetchServices = async () => {
     const data = await fetcher<Service>('services?fields=*,translations.*,home_size.tailwind_class&filter[show_on_home][_eq]=true');
     // Ensure "Formation, Agents, Automation" order and limit to 3 strictly
-    // We prioritize by internal_name if available or just by the first 3 that aren't Marketing
     return data
         .filter(s => !(s as any).internal_name?.includes('MARKETING'))
         .slice(0, 3);
+};
+
+export const fetchServiceBySlug = async (slug: string) => {
+    const data = await fetcher<Service>(`services?fields=*,translations.*,sub_services.*,sub_services.translations.*&filter[slug][_eq]=${slug}`);
+    return data[0] || null;
 };
 
 export const fetchNews = () =>

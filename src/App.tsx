@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import ServicesGrid from './components/ServicesGrid'
-import PulseGrid from './components/PulseGrid'
-import RecreoSection from './components/RecreoSection'
-import PortfolioGrid from './components/PortfolioGrid'
+import HomePage from './pages/HomePage'
+import ServicePage from './pages/ServicePage'
 import { initApp } from './services/api'
 import logo from './assets/topnav_IAya.png'
 
@@ -20,17 +18,11 @@ function App() {
       <Navbar activeLang={activeLang} setActiveLang={setActiveLang} />
 
       <main className="relative">
-        <Hero locale={activeLang} />
-
-
-        <ServicesGrid locale={activeLang} />
-
-        <PulseGrid locale={activeLang} />
-
-        <RecreoSection locale={activeLang} />
-
-
-        <PortfolioGrid locale={activeLang} />
+        <Routes>
+          <Route path="/" element={<HomePage activeLang={activeLang} />} />
+          <Route path="/services/:slug" element={<ServicePage activeLang={activeLang} />} />
+          <Route path="/services/:slug/:subSlug" element={<ServicePage activeLang={activeLang} />} />
+        </Routes>
 
         {/* Footer Signature */}
         <footer className="py-12 bg-iaya-bg border-t border-white/5">
