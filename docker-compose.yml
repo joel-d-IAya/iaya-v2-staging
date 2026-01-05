@@ -1,10 +1,11 @@
 services:
   iaya-staging:
-    build: .
+    build:
+      context: .
+      args:
+        - VITE_DIRECTUS_URL=${VITE_DIRECTUS_URL}
+        - VITE_DIRECTUS_TOKEN=${VITE_DIRECTUS_TOKEN}
     container_name: iaya-staging
     ports:
       - "5173:80"
     restart: always
-    environment:
-      - VITE_DIRECTUS_URL=${VITE_DIRECTUS_URL}
-      - VITE_DIRECTUS_TOKEN=${VITE_DIRECTUS_TOKEN}

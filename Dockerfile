@@ -10,6 +10,12 @@ RUN npm install
 # Copy source
 COPY . .
 
+# Pass environment variables for Vite build
+ARG VITE_DIRECTUS_URL
+ARG VITE_DIRECTUS_TOKEN
+ENV VITE_DIRECTUS_URL=$VITE_DIRECTUS_URL
+ENV VITE_DIRECTUS_TOKEN=$VITE_DIRECTUS_TOKEN
+
 # Build the app
 RUN npm run build
 
