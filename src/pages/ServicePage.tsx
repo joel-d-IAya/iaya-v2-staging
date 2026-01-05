@@ -190,7 +190,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                                             />
                                             <h3 className="text-2xl font-outfit font-bold mb-4">{subContent.title}</h3>
                                             <p className="text-white/60 font-inter mb-8 line-clamp-3">
-                                                {subContent.summary || subContent.description}
+                                                {cleanMarkdown(subContent.summary || subContent.description)}
                                             </p>
 
                                             <div
