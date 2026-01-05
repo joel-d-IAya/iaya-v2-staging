@@ -13,10 +13,13 @@ git pull origin main
 # 2. Logique de Déploiement
 if [ -f "docker-compose.yml" ]; then
     echo "🐳 Déploiement via Docker Compose (Recommandé)..."
-    # --build force la reconstruction de l'image (l'étape de build npm se fait dans le container)
-    # L'utilisation de Docker permet d'isoler le build et d'éviter de polluer le système hôte.
-    docker compose up -d --build
-    echo "✅ Déploiement Docker terminé."
+    # --build force la reconstruction de l'image
+    if docker compose up -d --build; then
+        echo "✅ Déploiement Docker terminé avec succès."
+    else
+        echo "❌ Échec du build ou du déploiement Docker."
+        exit 1
+    fi
 elif [ -d "dist" ]; then
     echo "📄 Mode Statique (Fallback)..."
     # Exemple de copie vers un dossier servi par Nginx
