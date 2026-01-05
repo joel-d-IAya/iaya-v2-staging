@@ -102,7 +102,7 @@ const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => 
                                                         {subContent.summary || subContent.description}
                                                     </p>
                                                     <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all group-hover:gap-4" style={{ color: accentColor }}>
-                                                        Découvrir <span>→</span>
+                                                        {activeLang === 'FR' ? 'Découvrir' : activeLang === 'EN' ? 'Discover' : 'Descubrir'} <span>→</span>
                                                     </div>
                                                 </Link>
                                             );

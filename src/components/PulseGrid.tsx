@@ -37,6 +37,15 @@ const TimePill = ({ date, locale }: { date: string, locale: string }) => {
     );
 };
 
+const cleanMarkdown = (text: string | undefined): string => {
+    if (!text) return '';
+    // Remove ### (headings) and ** (bold) markers correctly
+    return text
+        .replace(/#+\s?/g, '') // Remove all level of heading markers (#, ##, ###, etc.)
+        .replace(/\*\*/g, '')   // Remove bold markers
+        .trim();
+};
+
 export default function PulseGrid({ locale }: { locale: string }) {
     const [news, setNews] = useState<NewsItem[]>([]);
     const [loading, setLoading] = useState(true);
@@ -126,7 +135,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                             <span className="text-[10px] font-outfit font-bold uppercase tracking-[0.2em] text-iaya-orange">Nexus Insight</span>
                                         </div>
                                         <p className="text-white/80 font-inter text-lg leading-relaxed italic">
-                                            {getLocalizedContent(heroNews, locale).nexus || getLocalizedContent(heroNews, locale).summary}
+                                            {cleanMarkdown(getLocalizedContent(heroNews, locale).nexus || getLocalizedContent(heroNews, locale).summary)}
                                         </p>
                                     </div>
                                 </div>
@@ -134,7 +143,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                 {/* 3. Full Content below */}
                                 <div className="prose prose-invert max-w-none">
                                     <p className="text-white/60 font-inter text-base leading-relaxed whitespace-pre-line">
-                                        {getLocalizedContent(heroNews, locale).content}
+                                        {cleanMarkdown(getLocalizedContent(heroNews, locale).content)}
                                     </p>
                                 </div>
                             </div>
@@ -146,8 +155,8 @@ export default function PulseGrid({ locale }: { locale: string }) {
                         const content = getLocalizedContent(item, locale);
                         const title = content.title || "Untitled News";
                         const fullContentSource = content.full_content || content.content || "";
-                        // Extract exactly first 150 chars as requested
-                        const summary = fullContentSource.substring(0, 150).replace(/[#*]/g, '') + '...';
+                        // Clean first, then Extract exactly first 150 chars as requested
+                        const summary = cleanMarkdown(fullContentSource).substring(0, 150) + '...';
                         const slug = content.slug || item.slug || item.id;
 
                         return (

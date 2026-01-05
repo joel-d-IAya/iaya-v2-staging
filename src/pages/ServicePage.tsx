@@ -25,6 +25,15 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
         load();
     }, [slug]);
 
+    const cleanMarkdown = (text: string | undefined): string => {
+        if (!text) return '';
+        // Remove ### (headings) and ** (bold) markers correctly
+        return text
+            .replace(/###\s?/g, '') // Remove H3 markers
+            .replace(/\*\*/g, '')   // Remove bold markers
+            .trim();
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-iaya-bg">
@@ -46,8 +55,8 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
 
     // If subSlug is present, we are on a sub-service page
     if (subSlug) {
-        const subService = service.sub_services?.find(s => s.slug === subSlug);
-        if (!subService) return <div>Sub-service not found</div>;
+        const subService = service.sub_services?.find(s => (s.slug === subSlug || String(s.id) === subSlug));
+        if (!subService) return <div className="min-h-screen flex items-center justify-center">Sub-service not found</div>;
 
         const subContent = getLocalizedContent(subService, activeLang);
 
@@ -156,38 +165,42 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                                 const colSpan = idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1';
 
                                 return (
-                                    <motion.div
+                                    <Link
                                         key={sub.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className={`${colSpan} bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all group relative overflow-hidden flex flex-col`}
+                                        to={`/services/${slug}/${subSlugField}`}
+                                        className={`${colSpan} block`}
                                     >
-                                        <div
-                                            className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                                            style={{ background: `linear-gradient(45deg, ${accentColor}, transparent)` }}
-                                        />
-
-                                        <DynamicIcon
-                                            name={sub.main_icon || 'Zap'}
-                                            color={accentColor}
-                                            size={32}
-                                            className="mb-6"
-                                        />
-                                        <h3 className="text-2xl font-outfit font-bold mb-4">{subContent.title}</h3>
-                                        <p className="text-white/60 font-inter mb-8 line-clamp-3">
-                                            {subContent.summary || subContent.description}
-                                        </p>
-
-                                        <Link
-                                            to={`/services/${slug}/${subSlugField}`}
-                                            className="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:gap-4 transition-all"
-                                            style={{ color: accentColor }}
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: idx * 0.1 }}
+                                            className="h-full bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all group relative overflow-hidden flex flex-col"
                                         >
-                                            Découvrir <span className="text-xl">→</span>
-                                        </Link>
-                                    </motion.div>
+                                            <div
+                                                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                                                style={{ background: `linear-gradient(45deg, ${accentColor}, transparent)` }}
+                                            />
+
+                                            <DynamicIcon
+                                                name={sub.main_icon || 'Zap'}
+                                                color={accentColor}
+                                                size={32}
+                                                className="mb-6"
+                                            />
+                                            <h3 className="text-2xl font-outfit font-bold mb-4">{subContent.title}</h3>
+                                            <p className="text-white/60 font-inter mb-8 line-clamp-3">
+                                                {subContent.summary || subContent.description}
+                                            </p>
+
+                                            <div
+                                                className="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest group-hover:gap-4 transition-all"
+                                                style={{ color: accentColor }}
+                                            >
+                                                {activeLang === 'FR' ? 'Découvrir' : activeLang === 'EN' ? 'Discover' : 'Descubrir'} <span className="text-xl">→</span>
+                                            </div>
+                                        </motion.div>
+                                    </Link>
                                 );
                             })}
                         </div>
