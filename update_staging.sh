@@ -10,11 +10,19 @@ echo "--- 🚀 Mise à jour de IAya Staging ---"
 echo "📦 Récupération du code depuis GitHub..."
 git pull origin main
 
-# 2. Logique de Déploiement
+# 2. Charger les variables d'environnement (Crucial pour Vite/Docker Build)
+if [ -f ".env" ]; then
+    echo "🔑 Chargement des variables d'environnement..."
+    export $(grep -v '^#' .env | xargs)
+else
+    echo "⚠️  Attention: Aucun fichier .env trouvé à la racine."
+fi
+
+# 3. Logique de Déploiement
 if [ -f "docker-compose.yml" ]; then
-    echo "🐳 Déploiement via Docker Compose (Recommandé)..."
-    # --build force la reconstruction de l'image
-    if docker compose up -d --build; then
+    echo "🐳 Déploiement via Docker Compose..."
+    # --build et --no-cache garantissent que Vite compile avec les dernières variables et le dernier code
+    if docker compose up -d --build --force-recreate; then
         echo "✅ Déploiement Docker terminé avec succès."
     else
         echo "❌ Échec du build ou du déploiement Docker."
