@@ -1,0 +1,33 @@
+{
+  "data": [
+    {
+      "id": "1933d152-2cd4-439a-ae49-67ec5e982d34",
+      "translations": [
+        {
+          "id": 40,
+          "daily_news_id": "1933d152-2cd4-439a-ae49-67ec5e982d34",
+          "languages_code": "es-ES",
+          "title": "IA con 'Sentido Común': El salto del procesamiento al razonamiento",
+          "content": "### ¿Qué está pasando?\nEstamos presenciando el nacimiento de los **Modelos de Razonamiento**. A diferencia de las versiones anteriores que respondían de forma instantánea (y a veces errónea), estas nuevas herramientas están diseñadas para 'detenerse y pensar' antes de contestar. \n\n### ¿Qué hace por ti?\n*   **Precisión Quirúrgica:** Ideal para resolver problemas matemáticos complejos, programación o planificación logística sin los errores comunes de antes.\n*   **Autocorrección:** La IA ahora verifica sus propios pasos, lo que significa que recibes resultados más confiables para tu negocio o estudios.\n*   **Lenguaje Natural:** No necesitas ser programador; simplemente explicas tu problema y la IA desglosa la solución paso a paso.",
+          "nexus": "### El Nexo LATAM\nPara un emprendedor en **Bogotá** o un administrador en **Cuenca**, esto cambia las reglas del juego. Imagina automatizar la gestión de inventarios complejos o crear planes educativos personalizados que realmente entienden el contexto del estudiante. Esta tecnología reduce la brecha digital, permitiendo que pequeñas empresas compitan con gigantes globales usando herramientas de bajo costo que actúan como consultores expertos. En **IAya**, estamos listos para enseñarte a guiar estos 'pensamientos' de la IA para maximizar tu productividad."
+        },
+        {
+          "id": 41,
+          "daily_news_id": "1933d152-2cd4-439a-ae49-67ec5e982d34",
+          "languages_code": "en-US",
+          "title": "AI with 'Common Sense': The Leap from Processing to Reasoning",
+          "content": "### What’s happening?\nWe are witnessing the birth of **Reasoning Models**. Unlike previous versions that responded instantly (and sometimes incorrectly), these new tools are designed to 'stop and think' before they answer.\n\n### What does it do for you?\n*   **Surgical Precision:** Ideal for solving complex math, coding, or logistics planning without the usual hallucinations.\n*   **Self-Correction:** The AI now checks its own steps, meaning you get more reliable results for your business or research.\n*   **Natural Language:** You don’t need to be a coder; simply explain your problem, and the AI breaks down the solution step-by-step.",
+          "nexus": "### The LATAM Nexus\nFor an entrepreneur in **Bogotá** or an administrator in **Cuenca**, this is a game-changer. Imagine automating complex inventory management or creating personalized educational plans that truly understand the student's context. This technology bridges the digital divide, allowing small businesses to compete with global giants using low-cost tools that act as expert consultants. At **IAya**, we are ready to teach you how to guide these AI 'thoughts' to maximize your productivity."
+        },
+        {
+          "id": 42,
+          "daily_news_id": "1933d152-2cd4-439a-ae49-67ec5e982d34",
+          "languages_code": "fr-FR",
+          "title": "L'IA dotée de 'Bon Sens' : Le passage du traitement au raisonnement",
+          "content": "### Que se passe-t-il ?\nNous assistons à la naissance des **Modèles de Raisonnement**. Contrairement aux versions précédentes qui répondaient instantanément (et parfois de manière erronée), ces nouveaux outils sont conçus pour « s'arrêter et réfléchir » avant de répondre.\n\n### Qu'est-ce que cela vous apporte ?\n*   **Précision Chirurgicale :** Idéal pour résoudre des problèmes mathématiques complexes, la programmation ou la planification logistique sans les erreurs habituelles.\n*   **Auto-correction :** L'IA vérifie désormais ses propres étapes, ce qui signifie que vous obtenez des résultats plus fiables pour votre entreprise ou vos études.\n*   **Langage Naturel :** Pas besoin d'être programmeur ; expliquez simplement votre problème et l'IA décompose la solution étape par étape.",
+          "nexus": "### Le Nexus LATAM\nPour un entrepreneur à **Bogotá** ou un administrateur à **Cuenca**, cela change la donne. Imaginez automatiser la gestion d'inventaires complexes ou créer des plans éducatifs personnalisés qui comprennent réellement le contexte de l'élève. Cette technologie réduit la fracture numérique, permettant aux petites entreprises de rivaliser avec les géants mondiaux en utilisant des outils à bas prix qui agissent comme des consultants experts. Chez **IAya**, nous sommes prêts à vous apprendre à guider ces « pensées » de l'IA pour maximiser votre productivité."
+        }
+      ]
+    }
+  ]
+}

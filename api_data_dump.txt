@@ -1,0 +1,37 @@
+--- services ---
+{
+  "id": 17,
+  "status": "published",
+  "internal_name": "SERVICE_TRAINING",
+  "show_on_home": true,
+  "accent_color": "turquoise",
+  "sort": null,
+  "main_icon": "GraduationCap",
+  "main_image": null,
+  "home_size": 24,
+  "page_size": null,
+  "translations": [
+    25,
+    26,
+    27
+  ],
+  "sub_services": [
+    26,
+    27
+  ]
+}
+--- daily_news ---
+{
+  "id": "1933d152-2cd4-439a-ae49-67ec5e982d34",
+  "status": "Processed",
+  "image": "0c7108fa-f84c-4473-b18a-0fedb8f588ae",
+  "image_name": "ai-reasoning-models-empowerment-latam-240524.png",
+  "publish_date": "2026-01-03T01:10:13",
+  "translations": [
+    40,
+    41,
+    42
+  ]
+}
+--- projects ---
+Empty data

@@ -1,0 +1,33 @@
+{
+  "data": [
+    {
+      "id": 17,
+      "translations": [
+        {
+          "id": 25,
+          "title": "Formation & Ateliers",
+          "summary": "Apprenez ce dont vous avez réellement besoin avec un accompagnement adapté.",
+          "full_content": "<h2>Apprendre l'IA par la pratique</h2><h3>L'IA par la pratique : L'immersion comme moteur de croissance</h3><p>Dans un écosystème où l'innovation dépasse la théorie, IAya propose une rupture avec les méthodes d'apprentissage traditionnelles. Notre approche \"Hands-on\" place l'utilisateur au centre de la création.</p><h4>La Solution IAya</h4><p>Nous ne formons pas à l'outil, mais à la résolution de problèmes complexes par l'IA. Via des sessions intensives sur Gemini, Cursor et les derniers LLMs, nous ancrons l'apprentissage dans vos workflows réels.</p><h4>Impact & Livrables</h4><p>Vos équipes reçoivent un catalogue de prompts propriétaires et des schémas d'automatisation personnalisés. Résultat : une augmentation immédiate de la vélocité opérationnelle et une réduction drastique de la friction technologique.</p>",
+          "services_id": 17,
+          "languages_code": "fr-FR"
+        },
+        {
+          "id": 26,
+          "title": "Capacitación y Talleres",
+          "summary": "Domina lo que realmente necesitas con un acompañamiento adaptado y diseñado para el mercado real.",
+          "full_content": "<h2>IA por la práctica</h2><h3>IA por la práctica: La inmersión como motor de crecimiento</h3><p>En un ecosistema donde la innovación supera la teoría, IAya propone una ruptura con los métodos de aprendizaje tradicionales. Nuestro enfoque \"Hands-on\" sitúa al usuario en el centro de la creación.</p><h4>La Solución IAya</h4><p>No formamos en la herramienta, sino en la resolución de problemas complejos mediante IA. A través de sesiones intensivas en Gemini, Cursor y los últimos LLM, anclamos el aprendizaje en sus flujos de trabajo reales.</p><h4>Impacto y Entregables</h4><p>Sus equipos reciben un catálogo de prompts propietarios y esquemas de automatización personalizados. Resultado: un aumento inmediato de la velocidad operativa y una reducción drástica de la fricción tecnológica.</p>",
+          "services_id": 17,
+          "languages_code": "es-ES"
+        },
+        {
+          "id": 27,
+          "title": "Training & Workshops",
+          "summary": "Master what you truly need with tailored support designed for the real market.",
+          "full_content": "<h2>AI through practice</h2><h3>AI Through Practice: Immersion as a Growth Engine</h3><p>In an ecosystem where innovation outpaces theory, IAya proposes a break from traditional learning methods. Our \"Hands-on\" approach puts the user at the center of creation.</p><h4>The IAya Solution</h4><p>We don't train you on tools, but on solving complex problems with AI. Through intensive sessions on Gemini, Cursor, and the latest LLMs, we anchor learning within your actual workflows.</p><h4>Impact & Deliverables</h4><p>Your teams receive a catalog of proprietary prompts and customized automation schemas. Result: an immediate increase in operational velocity and a drastic reduction in technological friction.</p>",
+          "services_id": 17,
+          "languages_code": "en-US"
+        }
+      ]
+    }
+  ]
+}

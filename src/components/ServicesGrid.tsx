@@ -39,23 +39,23 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
     const t = TEXTS[locale] || TEXTS.ES;
 
     return (
-        <section id="servicios" className="relative py-32 bg-[oklch(22%_0.02_250)]">
-            <div className="max-w-7xl mx-auto px-8">
-                <header className="mb-20 text-center lg:text-left">
+        <section id="servicios" className="relative py-32 bg-[#050505]">
+            <div className="max-w-[1440px] mx-auto px-8 lg:px-24">
+                <header className="mb-20">
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-iaya-orange font-outfit uppercase tracking-[0.3em] text-sm mb-6 block font-bold"
+                        className="text-blue-600 font-outfit uppercase tracking-[0.4em] text-xs mb-6 block font-black italic"
                     >
-                        {t.badge}
+                        IAya Technology / {t.badge}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-5xl sm:text-7xl font-outfit font-bold text-white tracking-tighter"
+                        className="text-6xl sm:text-[100px] font-black text-white tracking-tighter italic uppercase leading-none"
                     >
                         {t.title}
                     </motion.h2>

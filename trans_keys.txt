@@ -1,0 +1,2 @@
+Services Translation Keys: id, title, summary, full_content, services_id, languages_code
+Daily News Translation Keys: id, daily_news_id, languages_code, title, content, nexus

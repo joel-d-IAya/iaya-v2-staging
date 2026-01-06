@@ -24,6 +24,7 @@ export interface Service {
     slug: string;
     status: string;
     show_on_home?: boolean;
+    parentSlug?: string;
     main_icon?: string;
     home_size?: {
         tailwind_class: string;
@@ -31,7 +32,7 @@ export interface Service {
     page_size?: {
         tailwind_class: string;
     };
-    accent_color: string;
+    accent_color?: string;
     translations: Translation[];
     sub_services?: Service[];
 }
