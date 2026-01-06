@@ -16,7 +16,7 @@ services:
       - "traefik.http.routers.iaya-staging.rule=Host(`staging.iaya.cloud`)"
       - "traefik.http.routers.iaya-staging.entrypoints=web,websecure"
       - "traefik.http.routers.iaya-staging.tls=true"
-      - "traefik.http.routers.iaya-staging.tls.certresolver=myresolver"
+      - "traefik.http.routers.iaya-staging.tls.certresolver=mytlschallenge"
       - "traefik.http.services.iaya-staging.loadbalancer.server.port=80"
 
 networks:
