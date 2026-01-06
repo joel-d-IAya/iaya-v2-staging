@@ -130,7 +130,7 @@ export const getAssetUrl = (id: string | undefined): string => {
     return token ? `${baseUrl}?access_token=${token}` : baseUrl;
 };
 
-export const getAccentColor = (colorName: string): string => {
+export const getAccentColor = (colorName?: string): string => {
     if (!colorName) return 'var(--color-iaya-orange)';
     const normalized = colorName.toLowerCase();
     if (normalized === 'orange') return 'var(--color-iaya-orange)';
