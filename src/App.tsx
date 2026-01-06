@@ -22,8 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage activeLang={activeLang} />} />
           <Route path="/services" element={<ServicesIndexPage activeLang={activeLang} />} />
-          <Route path="/services/:slug" element={<ServicePage activeLang={activeLang} />} />
-          <Route path="/services/:slug/:subSlug" element={<ServicePage activeLang={activeLang} />} />
+          <Route path="/services/:serviceSlug" element={<ServicePage activeLang={activeLang} />} />
+          <Route path="/services/:serviceSlug/:subServiceSlug" element={<ServicePage activeLang={activeLang} />} />
         </Routes>
 
         {/* Footer Signature */}

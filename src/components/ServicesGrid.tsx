@@ -30,7 +30,7 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
             setLoading(true);
             const data = await fetchServices();
             console.log("Directus Data in Grid:", data);
-            setServices(data.slice(0, 3));
+            setServices(data);
             setLoading(false);
         };
         load();
@@ -69,8 +69,9 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
                             ))
                         ) : (
                             services.map((service, index) => {
+                                const sizeClass = service.home_size?.tailwind_class || 'md:col-span-4';
                                 return (
-                                    <div key={service.id || index} className="md:col-span-4 col-span-12">
+                                    <div key={service.id || index} className={`${sizeClass} col-span-12`}>
                                         <ServiceCard
                                             service={service}
                                             locale={locale}

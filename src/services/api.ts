@@ -20,10 +20,15 @@ export interface Translation {
 }
 
 export interface Service {
-    id: string;
-    slug?: string;
+    id: string | number;
+    slug: string;
+    status: string;
+    show_on_home?: boolean;
     main_icon?: string;
     home_size?: {
+        tailwind_class: string;
+    };
+    page_size?: {
         tailwind_class: string;
     };
     accent_color: string;
@@ -32,10 +37,10 @@ export interface Service {
 }
 
 export interface NewsItem {
-    id: string;
+    id: string | number;
     publish_date: string;
     image?: string;
-    slug?: string;
+    slug: string;
     translations: Translation[];
 }
 
@@ -125,9 +130,14 @@ export const getAssetUrl = (id: string | undefined): string => {
 };
 
 export const getAccentColor = (colorName: string): string => {
-    const normalized = colorName?.toLowerCase();
+    if (!colorName) return 'var(--color-iaya-orange)';
+    const normalized = colorName.toLowerCase();
     if (normalized === 'orange') return 'var(--color-iaya-orange)';
     if (normalized === 'turquoise') return 'var(--color-iaya-turquoise)';
+    // If it looks like a hex code or other CSS color, return it directly
+    if (colorName.startsWith('#') || colorName.startsWith('rgb') || colorName.startsWith('oklch')) {
+        return colorName;
+    }
     return 'var(--color-iaya-orange)';
 };
 
@@ -152,52 +162,33 @@ async function fetcher<T>(endpoint: string): Promise<T[]> {
 }
 
 export const fetchServices = async () => {
-    // Note: 'slug' is missing/restricted in CMS, using 'id' as identifier.
-    const data = await fetcher<Service>('services?fields=id,main_icon,accent_color,translations.*,home_size.tailwind_class&filter[show_on_home][_eq]=true');
-    return data
-        .filter(s => !(s as any).internal_name?.includes('MARKETING'))
-        .slice(0, 3);
+    // FILTRE: published ET show_on_home
+    return await fetcher<Service>('services?fields=*,home_size.tailwind_class,translations.*&filter[status][_eq]=published&filter[show_on_home][_eq]=true&sort=sort');
 };
 
 export const fetchAllServices = async () => {
-    // Note: Correcting depth for sub_services expansion
-    const data = await fetcher<any>('services?fields=id,internal_name,main_icon,accent_color,translations.*,sub_services.sub_services_id.*,sub_services.sub_services_id.translations.*');
+    // Récupère tout le catalogue publié
+    const data = await fetcher<any>('services?fields=*,home_size.tailwind_class,page_size.tailwind_class,translations.*,sub_services.sub_services_id.*,sub_services.sub_services_id.translations.*,sub_services.sub_services_id.page_size.tailwind_class&filter[status][_eq]=published&sort=sort');
 
-    // Normalize sub_services: Flatten junction items
-    return data
-        .filter(s => !s.internal_name?.includes('MARKETING'))
-        .map(s => ({
-            ...s,
-            sub_services: s.sub_services?.map((junction: any) => junction.sub_services_id).filter(Boolean) || []
-        }));
+    return data.map(s => ({
+        ...s,
+        sub_services: s.sub_services?.map((junction: any) => junction.sub_services_id)
+            .filter((sub: any) => sub && sub.status === 'published') || []
+    }));
 };
 
 export const fetchServiceBySlug = async (slug: string) => {
-    // Since 'slug' field doesn't exist, we use 'id' or search in translations
     const encodedSlug = encodeURIComponent(slug);
-
-    // We try to find by ID first, then by internal_name, then by title in translations
-    let data: any[] = [];
-
-    if (!isNaN(Number(slug))) {
-        data = await fetcher<any>(`services?fields=id,internal_name,main_icon,accent_color,translations.*,sub_services.sub_services_id.*,sub_services.sub_services_id.translations.*&filter[id][_eq]=${encodedSlug}`);
-    }
-
-    if (data.length === 0) {
-        data = await fetcher<any>(`services?fields=id,internal_name,main_icon,accent_color,translations.*,sub_services.sub_services_id.*,sub_services.sub_services_id.translations.*&filter[internal_name][_eq]=${encodedSlug}`);
-    }
-
-    if (data.length === 0) {
-        // Search in translations? (Expensive but useful)
-        data = await fetcher<any>(`services?fields=id,internal_name,main_icon,accent_color,translations.*,sub_services.sub_services_id.*,sub_services.sub_services_id.translations.*&filter[translations][title][_eq]=${encodedSlug}`);
-    }
+    // RECHERCHE PAR SLUG (SEO Friendly)
+    const data = await fetcher<any>(`services?fields=*,home_size.tailwind_class,page_size.tailwind_class,translations.*,sub_services.sub_services_id.*,sub_services.sub_services_id.translations.*,sub_services.sub_services_id.page_size.tailwind_class&filter[slug][_eq]=${encodedSlug}&filter[status][_eq]=published`);
 
     if (data.length === 0) return null;
 
     const s = data[0];
     return {
         ...s,
-        sub_services: s.sub_services?.map((junction: any) => junction.sub_services_id).filter(Boolean) || []
+        sub_services: s.sub_services?.map((junction: any) => junction.sub_services_id)
+            .filter((sub: any) => sub && sub.status === 'published') || []
     };
 };
 

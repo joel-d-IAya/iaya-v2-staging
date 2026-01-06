@@ -10,20 +10,20 @@ interface ServicePageProps {
 }
 
 const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
-    const { slug, subSlug } = useParams<{ slug: string; subSlug?: string }>();
+    const { serviceSlug, subServiceSlug } = useParams<{ serviceSlug: string; subServiceSlug?: string }>();
     const [service, setService] = useState<Service | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const load = async () => {
-            if (!slug) return;
+            if (!serviceSlug) return;
             setLoading(true);
-            const data = await fetchServiceBySlug(slug);
+            const data = await fetchServiceBySlug(serviceSlug);
             setService(data);
             setLoading(false);
         };
         load();
-    }, [slug]);
+    }, [serviceSlug]);
 
     const cleanMarkdown = (text: string | undefined): string => {
         if (!text) return '';
@@ -53,9 +53,9 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
     const content = getLocalizedContent(service, activeLang);
     const accentColor = getAccentColor(service.accent_color);
 
-    // If subSlug is present, we are on a sub-service page
-    if (subSlug) {
-        const subService = service.sub_services?.find(s => (s.slug === subSlug || String(s.id) === subSlug));
+    // If subServiceSlug is present, we are on a sub-service page
+    if (subServiceSlug) {
+        const subService = service.sub_services?.find(s => s.slug === subServiceSlug);
         if (!subService) return <div className="min-h-screen flex items-center justify-center">Sub-service not found</div>;
 
         const subContent = getLocalizedContent(subService, activeLang);
@@ -159,16 +159,12 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             {service.sub_services.map((sub, idx) => {
                                 const subContent = getLocalizedContent(sub, activeLang);
-                                // Determine the subSlug properly
-                                const subSlugField = sub.slug || subContent.slug || sub.id;
-                                // Simple logic for span: every 3rd item spans 2
-                                const colSpan = idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1';
-
+                                const subAccentColor = sub.accent_color ? getAccentColor(sub.accent_color) : accentColor;
                                 return (
                                     <Link
                                         key={sub.id}
-                                        to={`/services/${slug}/${subSlugField}`}
-                                        className={`${colSpan} block`}
+                                        to={`/services/${serviceSlug}/${sub.slug}`}
+                                        className={`${sub.page_size?.tailwind_class || (idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1')} block`}
                                     >
                                         <motion.div
                                             initial={{ opacity: 0, y: 20 }}
@@ -179,12 +175,12 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                                         >
                                             <div
                                                 className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                                                style={{ background: `linear-gradient(45deg, ${accentColor}, transparent)` }}
+                                                style={{ background: `linear-gradient(45deg, ${subAccentColor}, transparent)` }}
                                             />
 
                                             <DynamicIcon
                                                 name={sub.main_icon || 'Zap'}
-                                                color={accentColor}
+                                                color={subAccentColor}
                                                 size={32}
                                                 className="mb-6"
                                             />
@@ -195,7 +191,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
 
                                             <div
                                                 className="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest group-hover:gap-4 transition-all"
-                                                style={{ color: accentColor }}
+                                                style={{ color: subAccentColor }}
                                             >
                                                 {activeLang === 'FR' ? 'Découvrir' : activeLang === 'EN' ? 'Discover' : 'Descubrir'} <span className="text-xl">→</span>
                                             </div>

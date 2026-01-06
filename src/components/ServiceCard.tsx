@@ -27,7 +27,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
 
     const title = content?.title || "Untitled Service";
     const summary = content?.summary || "No description available";
-    const serviceSlug = service.slug || content?.slug || service.id;
+    const serviceSlug = service.slug;
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!cardRef.current) return;

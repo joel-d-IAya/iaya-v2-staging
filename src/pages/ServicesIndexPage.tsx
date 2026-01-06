@@ -53,7 +53,6 @@ const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => 
                     {services.map((service) => {
                         const content = getLocalizedContent(service, activeLang);
                         const accentColor = getAccentColor(service.accent_color);
-                        const serviceSlug = service.slug || content.slug || service.id;
 
                         return (
                             <section key={service.id} className="relative">
@@ -71,7 +70,7 @@ const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => 
                                         </p>
                                     </div>
                                     <Link
-                                        to={`/services/${serviceSlug}`}
+                                        to={`/services/${service.slug}`}
                                         className="px-8 py-3 rounded-full border border-white/10 hover:bg-white hover:text-black transition-all font-outfit font-bold uppercase tracking-widest text-sm"
                                     >
                                         Voir les détails
@@ -81,27 +80,25 @@ const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => 
                                 {/* Sub-services Grid for this Service */}
                                 {service.sub_services && service.sub_services.length > 0 && (
                                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                        {service.sub_services.map((sub, sIdx) => {
+                                        {service.sub_services.map((sub, idx) => {
                                             const subContent = getLocalizedContent(sub, activeLang);
-                                            const subSlug = sub.slug || subContent.slug || sub.id;
-                                            const colSpan = sIdx % 4 === 0 || sIdx % 4 === 3 ? 'md:col-span-1' : 'md:col-span-2';
-
+                                            const subAccentColor = sub.accent_color ? getAccentColor(sub.accent_color) : accentColor;
                                             return (
                                                 <Link
                                                     key={sub.id}
-                                                    to={`/services/${serviceSlug}/${subSlug}`}
-                                                    className={`${colSpan} group bg-white/5 border border-white/10 rounded-[28px] p-8 hover:bg-white/10 transition-all relative overflow-hidden flex flex-col min-h-[280px]`}
+                                                    to={`/services/${service.slug}/${sub.slug}`}
+                                                    className={`${sub.page_size?.tailwind_class || (idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1')} group bg-white/5 border border-white/10 rounded-[28px] p-8 hover:bg-white/10 transition-all relative overflow-hidden flex flex-col min-h-[280px]`}
                                                 >
                                                     <div
                                                         className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity"
-                                                        style={{ background: accentColor }}
+                                                        style={{ background: subAccentColor }}
                                                     />
-                                                    <DynamicIcon name={sub.main_icon || 'Zap'} color={accentColor} size={32} className="mb-6" />
+                                                    <DynamicIcon name={sub.main_icon || 'Zap'} color={subAccentColor} size={32} className="mb-6" />
                                                     <h3 className="text-xl font-outfit font-bold mb-4">{subContent.title}</h3>
                                                     <p className="text-sm text-white/50 font-inter line-clamp-3 mb-8">
                                                         {subContent.summary || subContent.description}
                                                     </p>
-                                                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all group-hover:gap-4" style={{ color: accentColor }}>
+                                                    <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all group-hover:gap-4" style={{ color: subAccentColor }}>
                                                         {activeLang === 'FR' ? 'Découvrir' : activeLang === 'EN' ? 'Discover' : 'Descubrir'} <span>→</span>
                                                     </div>
                                                 </Link>
