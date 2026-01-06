@@ -9,3 +9,14 @@ services:
     ports:
       - "5173:80"
     restart: always
+    networks:
+      - root_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.iaya-staging.rule=Host(`staging.iaya.cloud`)"
+      - "traefik.http.routers.iaya-staging.entrypoints=web"
+      - "traefik.http.services.iaya-staging.loadbalancer.server.port=80"
+
+networks:
+  root_default:
+    external: true
