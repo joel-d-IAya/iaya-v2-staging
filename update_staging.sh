@@ -24,6 +24,15 @@ if [ -f "docker-compose.yml" ]; then
     # --build et --no-cache garantissent que Vite compile avec les dernières variables et le dernier code
     if docker compose up -d --build --force-recreate; then
         echo "✅ Déploiement Docker terminé avec succès."
+        
+        # 4. Extraction du build vers l'hôte (au cas où Nginx hôte serve le dossier dist)
+        echo "📂 Extraction du dossier 'dist' vers l'hôte..."
+        mkdir -p dist
+        # On crée un container temporaire pour copier les fichiers
+        docker create --name iaya_temp iaya-staging
+        docker cp iaya_temp:/usr/share/nginx/html/. ./dist/
+        docker rm iaya_temp
+        echo "✅ Dossier dist/ mis à jour sur l'hôte."
     else
         echo "❌ Échec du build ou du déploiement Docker."
         exit 1
