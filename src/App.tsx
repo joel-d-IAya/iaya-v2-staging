@@ -4,6 +4,8 @@ import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import ServicePage from './pages/ServicePage'
 import ServicesIndexPage from './pages/ServicesIndexPage'
+import NewsPage from './pages/NewsPage'
+import NewsDetailPage from './pages/NewsDetailPage'
 import { initApp } from './services/api'
 import logo from './assets/topnav_IAya.png'
 
@@ -24,6 +26,8 @@ function App() {
           <Route path="/services" element={<ServicesIndexPage activeLang={activeLang} />} />
           <Route path="/services/:serviceSlug" element={<ServicePage activeLang={activeLang} />} />
           <Route path="/services/:serviceSlug/:subServiceSlug" element={<ServicePage activeLang={activeLang} />} />
+          <Route path="/noticias" element={<NewsPage activeLang={activeLang} />} />
+          <Route path="/news/:slug" element={<NewsDetailPage activeLang={activeLang} />} />
         </Routes>
 
         {/* Footer Signature */}

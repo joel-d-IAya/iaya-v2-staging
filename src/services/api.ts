@@ -17,6 +17,7 @@ export interface Translation {
     full_content?: string;
     slug?: string;
     nexus?: string;
+    source?: string;
 }
 
 export interface Service {
@@ -24,7 +25,6 @@ export interface Service {
     slug: string;
     status: string;
     show_on_home?: boolean;
-    parentSlug?: string;
     main_icon?: string;
     home_size?: {
         tailwind_class: string;
@@ -32,7 +32,7 @@ export interface Service {
     page_size?: {
         tailwind_class: string;
     };
-    accent_color?: string;
+    accent_color: string;
     translations: Translation[];
     sub_services?: Service[];
 }
@@ -105,22 +105,48 @@ export const getUiLabels = (currentLang: string) => {
         readMore: 'En savoir plus',
         live: 'Dernière information',
         today: 'Aujourd\'hui',
-        yesterday: 'Hier'
+        yesterday: 'Hier',
+        readAllNews: 'Lire toutes les Actualités',
+        nexusLabel: 'Impact sur le Marché Équatorien',
+        source: 'Source',
+        nextNews: 'Actualité suivante',
+        prevNews: 'Actualité précédente'
     };
     if (lang === 'en') return {
         cta: 'Discover more',
         readMore: 'Read more',
         live: 'Last news',
         today: 'Today',
-        yesterday: 'Yesterday'
+        yesterday: 'Yesterday',
+        readAllNews: 'Read all the news',
+        nexusLabel: 'Impact on the Ecuadorian Market',
+        source: 'Source',
+        nextNews: 'Next News',
+        prevNews: 'Previous News'
     };
     return {
         cta: 'Descubrir más',
         readMore: 'Leer más',
         live: 'Última noticia',
         today: 'Hoy',
-        yesterday: 'Ayer'
+        yesterday: 'Ayer',
+        readAllNews: 'Leer toutes les noticias',
+        nexusLabel: 'Impacto por el Mercado Ecuatoriano',
+        source: 'Fuente',
+        nextNews: 'Siguiente noticia',
+        prevNews: 'Noticia anterior'
     }; // Default to ES
+};
+
+export const toSlug = (text: string): string => {
+    return text
+        .toLowerCase()
+        .normalize('NFD') // Supprimer les accents
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '') // Supprimer caractères spéciaux
+        .trim()
+        .replace(/\s+/g, '-') // Espaces -> tirets
+        .replace(/-+/g, '-'); // Éviter tirets multiples
 };
 
 export const getAssetUrl = (id: string | undefined): string => {
@@ -130,16 +156,16 @@ export const getAssetUrl = (id: string | undefined): string => {
     return token ? `${baseUrl}?access_token=${token}` : baseUrl;
 };
 
-export const getAccentColor = (colorName?: string): string => {
+export const getAccentColor = (colorName: string): string => {
     if (!colorName) return 'var(--color-iaya-orange)';
     const normalized = colorName.toLowerCase();
+
+    // Internal Tokens
     if (normalized === 'orange') return 'var(--color-iaya-orange)';
     if (normalized === 'turquoise') return 'var(--color-iaya-turquoise)';
-    // If it looks like a hex code or other CSS color, return it directly
-    if (colorName.startsWith('#') || colorName.startsWith('rgb') || colorName.startsWith('oklch')) {
-        return colorName;
-    }
-    return 'var(--color-iaya-orange)';
+
+    // Return the color directly (handles hex, oklch, and standard CSS color names)
+    return colorName;
 };
 
 // --- API Calls ---
@@ -195,6 +221,9 @@ export const fetchServiceBySlug = async (slug: string) => {
 
 export const fetchNews = () =>
     fetcher<NewsItem>('daily_news?fields=*,translations.*&limit=4&sort=-publish_date');
+
+export const fetchAllNews = () =>
+    fetcher<NewsItem>('daily_news?fields=*,translations.*&sort=-publish_date');
 
 export const fetchRecreo = () =>
     fetcher<RecreoItem>('recreo?fields=*,translations.*');

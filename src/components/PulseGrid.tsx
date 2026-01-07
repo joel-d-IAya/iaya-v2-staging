@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchNews, getLocalizedContent, type NewsItem, getUiLabels, getAssetUrl } from '../services/api';
+import { fetchNews, getAssetUrl, getUiLabels, getLocalizedContent, type NewsItem, toSlug } from '../services/api';
 
 const TEXTS: Record<string, { title: string, subtitle: string }> = {
     ES: { title: 'PULSE / NEWS', subtitle: 'Las últimas noticias de IA' },
@@ -109,7 +109,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                     className="text-3xl sm:text-5xl font-outfit font-bold text-white mb-10 tracking-tight leading-tight cursor-pointer hover:text-iaya-orange transition-colors"
                                     onClick={() => {
                                         const content = getLocalizedContent(heroNews, locale);
-                                        const slug = content.slug || heroNews.slug || heroNews.id;
+                                        const slug = content.slug || heroNews.slug || (content.title ? toSlug(content.title) : heroNews.id);
                                         window.location.href = `/news/${slug}`;
                                     }}
                                 >
@@ -132,9 +132,9 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                     <div className="flex flex-col justify-center h-full">
                                         <div className="flex items-center gap-3 mb-4">
                                             <div className="h-[1px] w-8 bg-iaya-orange" />
-                                            <span className="text-[10px] font-outfit font-bold uppercase tracking-[0.2em] text-iaya-orange">Nexus Insight</span>
+                                            <span className="text-[9px] font-outfit font-bold uppercase tracking-[0.2em] text-iaya-orange">{labels.nexusLabel}</span>
                                         </div>
-                                        <p className="text-white/80 font-inter text-lg leading-relaxed italic">
+                                        <p className="text-white/80 font-inter text-base leading-relaxed italic">
                                             {cleanMarkdown(getLocalizedContent(heroNews, locale).nexus || getLocalizedContent(heroNews, locale).summary)}
                                         </p>
                                     </div>
@@ -142,9 +142,10 @@ export default function PulseGrid({ locale }: { locale: string }) {
 
                                 {/* 3. Full Content below */}
                                 <div className="prose prose-invert max-w-none">
-                                    <p className="text-white/60 font-inter text-base leading-relaxed whitespace-pre-line">
-                                        {cleanMarkdown(getLocalizedContent(heroNews, locale).content)}
-                                    </p>
+                                    <div
+                                        className="text-white/60 font-inter text-base leading-relaxed whitespace-pre-line"
+                                        dangerouslySetInnerHTML={{ __html: cleanMarkdown(getLocalizedContent(heroNews, locale).content) }}
+                                    />
                                 </div>
                             </div>
                         </motion.div>
@@ -157,7 +158,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                         const fullContentSource = content.full_content || content.content || "";
                         // Clean first, then Extract exactly first 150 chars as requested
                         const summary = cleanMarkdown(fullContentSource).substring(0, 150) + '...';
-                        const slug = content.slug || item.slug || item.id;
+                        const slug = content.slug || item.slug || (content.title ? toSlug(content.title) : item.id);
 
                         return (
                             <motion.div
@@ -202,6 +203,19 @@ export default function PulseGrid({ locale }: { locale: string }) {
                             </motion.div>
                         );
                     })}
+                </div>
+
+                <div className="mt-20 flex justify-center">
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => window.location.href = '/noticias'}
+                        className="px-10 py-5 rounded-full bg-white text-iaya-bg font-outfit font-bold text-lg hover:bg-iaya-orange hover:text-white transition-all duration-300 shadow-xl shadow-iaya-orange/10"
+                    >
+                        {labels.readAllNews}
+                    </motion.button>
                 </div>
             </div>
         </section >

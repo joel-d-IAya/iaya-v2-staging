@@ -15,6 +15,13 @@ const TEXTS: Record<string, { badge: string; title: string }> = {
     FR: { badge: 'Notre Expertise', title: 'Services de Classe Mondiale' }
 };
 
+const GRID_MAP: Record<string, string> = {
+    "col-span-4": "md:col-span-4",
+    "col-span-6": "md:col-span-6",
+    "col-span-8": "md:col-span-8",
+    "col-span-12": "md:col-span-12"
+};
+
 const SkeletonCard = () => (
     <div
         className="rounded-[32px] bg-white/5 border border-white/10 h-[400px] animate-pulse md:col-span-4 col-span-12"
@@ -39,23 +46,23 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
     const t = TEXTS[locale] || TEXTS.ES;
 
     return (
-        <section id="servicios" className="relative py-32 bg-[#050505]">
-            <div className="max-w-[1440px] mx-auto px-8 lg:px-24">
-                <header className="mb-20">
+        <section id="servicios" className="relative py-32 bg-[oklch(22%_0.02_250)]">
+            <div className="max-w-7xl mx-auto px-8">
+                <header className="mb-20 text-center lg:text-left">
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-blue-600 font-outfit uppercase tracking-[0.4em] text-xs mb-6 block font-black italic"
+                        className="text-iaya-orange font-outfit uppercase tracking-[0.3em] text-sm mb-6 block font-bold"
                     >
-                        IAya Technology / {t.badge}
+                        {t.badge}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-6xl sm:text-[100px] font-black text-white tracking-tighter italic uppercase leading-none"
+                        className="text-5xl sm:text-7xl font-outfit font-bold text-white tracking-tighter"
                     >
                         {t.title}
                     </motion.h2>
@@ -69,9 +76,9 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
                             ))
                         ) : (
                             services.map((service, index) => {
-                                const sizeClass = service.home_size?.tailwind_class || 'md:col-span-4';
+                                const spanClass = GRID_MAP[service.home_size?.tailwind_class || ''] || "md:col-span-4";
                                 return (
-                                    <div key={service.id || index} className={`${sizeClass} col-span-12`}>
+                                    <div key={service.id || index} className={`${spanClass} col-span-1`}>
                                         <ServiceCard
                                             service={service}
                                             locale={locale}

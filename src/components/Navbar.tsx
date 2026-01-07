@@ -21,21 +21,21 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
         ES: [
             { name: 'Servicios', href: '/#servicios' },
             { name: 'Portafolio', href: '/#portfolio' },
-            { name: 'Noticias', href: '/#pulse' },
+            { name: 'Noticias', href: '/noticias' },
             { name: 'Recreo', href: '/#recreo' },
             { name: 'Contacto', href: '/#contacto' },
         ],
         EN: [
             { name: 'Services', href: '/#servicios' },
             { name: 'Portfolio', href: '/#portfolio' },
-            { name: 'News', href: '/#pulse' },
+            { name: 'News', href: '/noticias' },
             { name: 'Recreo', href: '/#recreo' },
             { name: 'Contact', href: '/#contacto' },
         ],
         FR: [
             { name: 'Services', href: '/#servicios' },
             { name: 'Portfolio', href: '/#portfolio' },
-            { name: 'Actualités', href: '/#pulse' },
+            { name: 'Actualités', href: '/noticias' },
             { name: 'Récréation', href: '/#recreo' },
             { name: 'Contact', href: '/#contacto' },
         ]
