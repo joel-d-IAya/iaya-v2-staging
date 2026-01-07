@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchAllNews, getLocalizedContent, type NewsItem, getAssetUrl, getUiLabels, toSlug } from '../services/api';
 
@@ -13,7 +13,6 @@ const cleanMarkdown = (text: string | undefined): string => {
 
 export default function NewsDetailPage({ activeLang }: { activeLang: string }) {
     const { slug } = useParams<{ slug: string }>();
-    const navigate = useNavigate();
     const [allNews, setAllNews] = useState<NewsItem[]>([]);
     const [item, setItem] = useState<NewsItem | null>(null);
     const [loading, setLoading] = useState(true);
