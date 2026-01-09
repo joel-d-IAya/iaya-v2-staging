@@ -13,6 +13,7 @@ interface CardProps {
     baseRotation: number;
     auraColor: string;
     scale?: number;
+    link?: string;
 }
 
 const LOCALIZED_CARDS: Record<string, CardProps[]> = {
@@ -26,6 +27,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
+            link: '#noticias'
         },
         {
             id: 1,
@@ -36,6 +38,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
+            link: '#servicios'
         },
         {
             id: 2,
@@ -47,16 +50,18 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
+            link: '#portafolio'
         },
         {
             id: 3,
             title: "Espacio Recreo",
-            body: "Aprende más de la inteligencia artificial gracias a nuestras anécdotas y experimentos diarios.",
+            body: "Aprende más de la intelligence artificial gracias a nuestras anécdotas et expériences quotidiennes.",
             ctaText: "Descubrir",
             ctaStyle: 'ghost',
             color: 'oklch(65% 0.22 280 / 30%)',
             auraColor: 'oklch(65% 0.3 280 / 60%)',
             baseRotation: 4,
+            link: '#recreo'
         },
         {
             id: 4,
@@ -67,6 +72,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(94% 0.08 250 / 35%)',
             auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
+            link: '#contacto'
         }
     ],
     EN: [
@@ -79,6 +85,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
+            link: '#noticias'
         },
         {
             id: 1,
@@ -89,6 +96,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
+            link: '#servicios'
         },
         {
             id: 2,
@@ -100,6 +108,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
+            link: '#portafolio'
         },
         {
             id: 3,
@@ -110,6 +119,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(65% 0.22 280 / 30%)',
             auraColor: 'oklch(65% 0.3 280 / 60%)',
             baseRotation: 4,
+            link: '#recreo'
         },
         {
             id: 4,
@@ -120,6 +130,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(94% 0.08 250 / 35%)',
             auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
+            link: '#contacto'
         }
     ],
     FR: [
@@ -132,6 +143,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
+            link: '#noticias'
         },
         {
             id: 1,
@@ -142,6 +154,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
+            link: '#servicios'
         },
         {
             id: 2,
@@ -153,6 +166,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
+            link: '#portafolio'
         },
         {
             id: 3,
@@ -163,6 +177,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(65% 0.22 280 / 30%)',
             auraColor: 'oklch(65% 0.3 280 / 60%)',
             baseRotation: 4,
+            link: '#recreo'
         },
         {
             id: 4,
@@ -173,6 +188,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(94% 0.08 250 / 35%)',
             auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
+            link: '#contacto'
         }
     ]
 };
@@ -275,7 +291,7 @@ const CardDecoration = ({ id }: { id: number }) => {
     return null;
 };
 
-const Card: React.FC<CardProps & { offset: number, isActive: boolean, fontWeight?: any }> = ({ id, title, body, list, ctaText, ctaStyle, color, auraColor, isActive, fontWeight }) => {
+const Card: React.FC<CardProps & { offset: number, isActive: boolean, fontWeight?: any }> = ({ id, title, body, list, ctaText, ctaStyle, color, auraColor, isActive, fontWeight, link }) => {
     const isWatermarkNews = id === 0;
     const isWatermarkMountain = id === 2;
     const isRecreo = id === 3;
@@ -359,32 +375,50 @@ const Card: React.FC<CardProps & { offset: number, isActive: boolean, fontWeight
 
                 <div className={`mt-auto transition-all duration-300 ${!isActive ? 'opacity-20 pointer-events-none scale-95' : 'opacity-100 scale-100'}`}>
                     {ctaStyle === 'outline' && (
-                        <button className="px-5 py-2 rounded-[8px] border border-iaya-orange text-white text-[12px] font-outfit uppercase tracking-wider hover:bg-iaya-orange hover:text-black transition-all">
+                        <button
+                            onClick={() => window.location.href = link || '#'}
+                            className="px-5 py-2 rounded-[8px] border border-iaya-orange text-white text-[12px] font-outfit uppercase tracking-wider hover:bg-iaya-orange hover:text-black transition-all"
+                        >
                             {ctaText}
                         </button>
                     )}
                     {ctaStyle === 'solid' && (
-                        <button className="px-6 py-2.5 rounded-[8px] bg-iaya-turquoise text-black text-[14px] font-inter font-bold hover:brightness-110 shadow-lg shadow-iaya-turquoise/20 transition-all">
+                        <button
+                            onClick={() => window.location.href = link || '#'}
+                            className="px-6 py-2.5 rounded-[8px] bg-iaya-turquoise text-black text-[14px] font-inter font-bold hover:brightness-110 shadow-lg shadow-iaya-turquoise/20 transition-all"
+                        >
                             {ctaText}
                         </button>
                     )}
                     {ctaStyle === 'primary' && (
-                        <button className="px-10 py-4 rounded-full bg-iaya-orange text-white text-[18px] font-outfit font-bold shadow-[0_0_20px_oklch(65%_0.20_45_/_40%)] hover:shadow-[0_0_30px_oklch(65%_0.20_45_/_60%)] transition-all">
+                        <button
+                            onClick={() => window.location.href = link || '#'}
+                            className="px-10 py-4 rounded-full bg-iaya-orange text-white text-[18px] font-outfit font-bold shadow-[0_0_20px_oklch(65%_0.20_45_/_40%)] hover:shadow-[0_0_30px_oklch(65%_0.20_45_/_60%)] transition-all"
+                        >
                             {ctaText}
                         </button>
                     )}
                     {ctaStyle === 'ghost' && (
-                        <button className="text-white text-[14px] border-b-2 border-white opacity-70 hover:opacity-100 transition-opacity pb-1">
+                        <button
+                            onClick={() => window.location.href = link || '#'}
+                            className="text-white text-[14px] border-b-2 border-white opacity-70 hover:opacity-100 transition-opacity pb-1"
+                        >
                             {ctaText}
                         </button>
                     )}
                     {ctaStyle === 'cyan' && (
-                        <button className="px-8 py-3 rounded-full bg-[oklch(75%_0.25_180)] text-black text-[15px] font-outfit font-bold hover:brightness-110 shadow-[0_10px_30px_rgba(0,255,255,0.3)] transition-all uppercase tracking-wider">
+                        <button
+                            onClick={() => window.location.href = link || '#'}
+                            className="px-8 py-3 rounded-full bg-[oklch(75%_0.25_180)] text-black text-[15px] font-outfit font-bold hover:brightness-110 shadow-[0_10px_30px_rgba(0,255,255,0.3)] transition-all uppercase tracking-wider"
+                        >
                             {ctaText}
                         </button>
                     )}
                     {ctaStyle === 'rounded' && (
-                        <button className="px-6 py-2.5 rounded-full bg-white text-black text-[14px] font-inter font-medium hover:bg-white/90 transition-colors">
+                        <button
+                            onClick={() => window.location.href = link || '#'}
+                            className="px-6 py-2.5 rounded-full bg-white text-black text-[14px] font-inter font-medium hover:bg-white/90 transition-colors"
+                        >
                             {ctaText}
                         </button>
                     )}

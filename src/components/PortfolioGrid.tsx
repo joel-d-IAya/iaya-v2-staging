@@ -1,82 +1,144 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchProjects, getLocalizedContent, type Project, getAssetUrl } from '../services/api';
+import { fetchPortfolio, type PortfolioItem } from '../services/api';
+import PortfolioCard from './PortfolioCard';
 
-const TEXTS: Record<string, string> = {
-    ES: 'Casos de Éxito',
-    EN: 'Success Stories',
-    FR: 'Cas de Réussite'
+const TEXTS: Record<string, { title: string, subtitle: string, cta: string, badge: string }> = {
+    ES: {
+        title: 'Casos de Éxito',
+        subtitle: 'Transformando visiones en realidades tangibles a través de la IA.',
+        cta: 'Explorar todo el Portafolio',
+        badge: 'Portfolio'
+    },
+    EN: {
+        title: 'Success Stories',
+        subtitle: 'Transforming visions into tangible realities through AI.',
+        cta: 'Explore full Portfolio',
+        badge: 'Portfolio'
+    },
+    FR: {
+        title: 'Cas de Réussite',
+        subtitle: 'Transformer les visions en réalités tangibles grâce à l\'IA.',
+        cta: 'Explorer tout le Portfolio',
+        badge: 'Portfolio'
+    }
+};
+
+// Safe mapping for Tailwind grid spans as per Directus audit
+const GRID_MAP: Record<string, string> = {
+    'col-span-12': 'md:col-span-12',
+    'col-span-8': 'md:col-span-8',
+    'col-span-6': 'md:col-span-6',
+    'col-span-4': 'md:col-span-4',
+    'col-span-3': 'md:col-span-3',
 };
 
 export default function PortfolioGrid({ locale }: { locale: string }) {
-    const [projects, setProjects] = useState<Project[]>([]);
+    const [portfolio, setPortfolio] = useState<PortfolioItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const t = TEXTS[locale] || TEXTS.ES;
 
     useEffect(() => {
-        fetchProjects().then(data => {
-            setProjects(data);
+        fetchPortfolio().then(data => {
+            setPortfolio(data);
             setLoading(false);
         });
     }, []);
 
-    if (loading) return null;
+    // Skeleton loader
+    if (loading && portfolio.length === 0) return (
+        <section id="portfolio" className="py-32 bg-iaya-bg">
+            <div className="max-w-7xl mx-auto px-8">
+                <div className="h-96 rounded-[40px] bg-white/5 animate-pulse flex items-center justify-center">
+                    <span className="font-outfit font-black italic text-2xl text-white/10 tracking-widest uppercase">IAya Portfolio...</span>
+                </div>
+            </div>
+        </section>
+    );
+
+    if (portfolio.length === 0) return null;
 
     return (
-        <section id="portfolio" className="py-32 bg-[oklch(12%_0.02_260)]">
+        <section id="portfolio" className="py-32 bg-iaya-bg relative overflow-hidden">
+            {/* Background elements for depth */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-iaya-turquoise/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
 
-            <div className="max-w-7xl mx-auto px-8">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-                    <div className="max-w-xl">
-                        <span className="text-iaya-turquoise font-outfit font-bold uppercase tracking-[0.3em] text-sm mb-6 block">Portfolio</span>
-                        <h2 className="text-5xl sm:text-6xl font-outfit font-bold text-white tracking-tighter">
-                            {TEXTS[locale] || TEXTS.ES}
-                        </h2>
+            <div className="max-w-7xl mx-auto px-8 relative z-10">
+
+                {/* Header Section */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
+                    <div className="max-w-3xl">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="flex items-center gap-4 mb-8"
+                        >
+                            <div className="w-12 h-[1px] bg-iaya-turquoise shadow-[0_0_10px_rgba(45,212,191,0.5)]" />
+                            <span className="text-iaya-turquoise font-outfit font-bold uppercase tracking-[0.4em] text-xs">
+                                {t.badge}
+                            </span>
+                        </motion.div>
+
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-5xl sm:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tighter mb-8 bg-gradient-to-br from-white via-white to-white/30 bg-clip-text text-transparent"
+                        >
+                            {t.title}
+                        </motion.h2>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="text-white/40 font-inter text-lg sm:text-xl leading-relaxed max-w-xl"
+                        >
+                            {t.subtitle}
+                        </motion.p>
                     </div>
+
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        viewport={{ once: true }}
+                        onClick={() => window.location.href = '/portafolio'}
+                        className="group relative px-10 py-5 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all duration-500 hover:border-iaya-turquoise/40 shadow-xl"
+                    >
+                        <div className="absolute inset-0 bg-iaya-turquoise/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <span className="relative z-10 font-outfit font-bold text-xs uppercase tracking-[0.2em] text-white flex items-center gap-3">
+                            {t.cta}
+                            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </span>
+                    </motion.button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    {projects.map((project, idx) => {
-                        const content = getLocalizedContent(project, locale);
-                        console.log("Rendering project:", project.id, "with lang:", locale, "found content:", !!content.title);
-                        const title = content.title || "Untitled Project";
-                        const summary = content.summary || "No description available";
-
+                {/* Bento Grid Matrix */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+                    {portfolio.map((item, index) => {
+                        // Map internal tailwind_class string to responsive tailwind classes
+                        const spanClass = GRID_MAP[item.home_size?.tailwind_class || ''] || "md:col-span-4";
                         return (
-                            <motion.div
-                                key={project.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.1 }}
-                                viewport={{ once: true }}
-                                className="group"
-                            >
-                                <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-8 border border-white/5 bg-white/5">
-                                    {project.image && (
-                                        <img
-                                            src={getAssetUrl(project.image)}
-                                            alt=""
-                                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                                        />
-                                    )}
-                                    <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.tech_stack?.map(tech => (
-                                                <span key={tech} className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] text-white/80 font-inter uppercase tracking-widest border border-white/5">
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                                <h3 className="text-2xl font-outfit font-bold text-white mb-3 group-hover:text-iaya-turquoise transition-colors">
-                                    {title}
-                                </h3>
-                                <p className="text-white/50 font-inter text-sm leading-relaxed line-clamp-2">
-                                    {summary}
-                                </p>
-                            </motion.div>
+                            <div key={item.id} className={`${spanClass} flex flex-col`}>
+                                <PortfolioCard
+                                    item={item}
+                                    locale={locale}
+                                    index={index}
+                                />
+                            </div>
                         );
                     })}
+                </div>
+
+                {/* Vertical Separator */}
+                <div className="mt-32 flex justify-center">
+                    <div className="w-px h-32 bg-gradient-to-b from-iaya-turquoise/30 via-iaya-turquoise/5 to-transparent" />
                 </div>
             </div>
         </section>

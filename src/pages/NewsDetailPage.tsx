@@ -41,7 +41,7 @@ export default function NewsDetailPage({ activeLang }: { activeLang: string }) {
     if (!item) return (
         <div className="min-h-screen bg-iaya-bg flex flex-col items-center justify-center text-white px-8 text-center">
             <h1 className="text-4xl font-outfit font-bold mb-4">News not found</h1>
-            <Link to="/noticias" className="text-iaya-orange hover:underline font-inter">Back to Archive</Link>
+            <Link to="/noticias" className="text-iaya-orange hover:underline font-inter">← {labels.newsArchive}</Link>
         </div>
     );
 
@@ -57,9 +57,9 @@ export default function NewsDetailPage({ activeLang }: { activeLang: string }) {
 
     return (
         <div className="min-h-screen bg-iaya-bg pt-40 pb-24">
-            <div className="max-w-6xl mx-auto px-8">
+            <div className="max-w-7xl mx-auto px-8">
                 <Link to="/noticias" className="inline-flex items-center gap-2 text-white/50 hover:text-iaya-orange transition-colors mb-12 font-outfit font-bold uppercase tracking-widest text-xs group">
-                    <span className="group-hover:-translate-x-1 transition-transform">←</span> Archive
+                    <span className="group-hover:-translate-x-1 transition-transform">←</span> {labels.newsArchive}
                 </Link>
 
                 <AnimatePresence mode="wait">
@@ -132,7 +132,7 @@ export default function NewsDetailPage({ activeLang }: { activeLang: string }) {
                         <div className="grid grid-cols-2 gap-6 mt-12">
                             {prevItem ? (
                                 <Link
-                                    to={`/news/${getSlug(prevItem)}`}
+                                    to={`/noticias/${getSlug(prevItem)}`}
                                     className="flex flex-col items-start gap-4 p-8 rounded-[32px] border border-white/10 bg-white/5 hover:bg-white/10 transition-all group backdrop-blur-sm"
                                 >
                                     <span className="text-[10px] font-outfit font-bold uppercase tracking-[0.2em] text-white/40 group-hover:text-iaya-orange transition-colors flex items-center gap-2">
@@ -146,7 +146,7 @@ export default function NewsDetailPage({ activeLang }: { activeLang: string }) {
 
                             {nextItem ? (
                                 <Link
-                                    to={`/news/${getSlug(nextItem)}`}
+                                    to={`/noticias/${getSlug(nextItem)}`}
                                     className="flex flex-col items-end text-right gap-4 p-8 rounded-[32px] border border-white/10 bg-white/5 hover:bg-white/10 transition-all group backdrop-blur-sm"
                                 >
                                     <span className="text-[10px] font-outfit font-bold uppercase tracking-[0.2em] text-white/40 group-hover:text-iaya-turquoise transition-colors flex items-center gap-2">

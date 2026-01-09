@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { fetchAllServices, getLocalizedContent, getAccentColor } from '../services/api';
+import { fetchAllServices, getLocalizedContent, getAccentColor, getUiLabels } from '../services/api';
 import type { Service } from '../services/api';
 import DynamicIcon from '../components/ui/DynamicIcon';
 
@@ -12,6 +12,7 @@ interface ServicesIndexPageProps {
 const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => {
     const [services, setServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState(true);
+    const labels = getUiLabels(activeLang);
 
     useEffect(() => {
         const load = async () => {
@@ -70,10 +71,10 @@ const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => 
                                         </p>
                                     </div>
                                     <Link
-                                        to={`/services/${service.slug}`}
+                                        to={`/servicios/${service.slug}`}
                                         className="px-8 py-3 rounded-full border border-white/10 hover:bg-white hover:text-black transition-all font-outfit font-bold uppercase tracking-widest text-sm"
                                     >
-                                        Voir les détails
+                                        {labels.serviceDetails}
                                     </Link>
                                 </div>
 
@@ -86,7 +87,7 @@ const ServicesIndexPage: React.FC<ServicesIndexPageProps> = ({ activeLang }) => 
                                             return (
                                                 <Link
                                                     key={sub.id}
-                                                    to={`/services/${service.slug}/${sub.slug}`}
+                                                    to={`/servicios/${service.slug}/${sub.slug}`}
                                                     className={`${sub.page_size?.tailwind_class || (idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1')} group bg-white/5 border border-white/10 rounded-[28px] p-8 hover:bg-white/10 transition-all relative overflow-hidden flex flex-col min-h-[280px]`}
                                                 >
                                                     <div

@@ -163,7 +163,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                                 return (
                                     <Link
                                         key={sub.id}
-                                        to={`/services/${serviceSlug}/${sub.slug}`}
+                                        to={`/servicios/${serviceSlug}/${sub.slug}`}
                                         className={`${sub.page_size?.tailwind_class || (idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1')} block`}
                                     >
                                         <motion.div

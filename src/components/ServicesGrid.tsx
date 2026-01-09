@@ -91,7 +91,7 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
                     </AnimatePresence>
                 </div>
                 <div className="mt-20 flex justify-center">
-                    <Link to="/services">
+                    <Link to="/servicios">
                         <motion.button
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}

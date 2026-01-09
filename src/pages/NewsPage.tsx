@@ -85,7 +85,7 @@ export default function NewsPage({ activeLang }: { activeLang: string }) {
                                 transition={{ delay: (idx % 3) * 0.1 }}
                                 viewport={{ once: true }}
                                 className="col-span-1 md:col-span-4 group cursor-pointer"
-                                onClick={() => window.location.href = `/news/${slug}`}
+                                onClick={() => window.location.href = `/noticias/${slug}`}
                             >
                                 <div className="relative aspect-square rounded-[24px] overflow-hidden border border-white/10 bg-white/5 mb-6">
                                     {item.image && (

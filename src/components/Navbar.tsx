@@ -19,25 +19,25 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
 
     const NAV_TEXTS: Record<string, any> = {
         ES: [
-            { name: 'Servicios', href: '/#servicios' },
-            { name: 'Portafolio', href: '/#portfolio' },
+            { name: 'Servicios', href: '/servicios' },
+            { name: 'Portafolio', href: '/portafolio' },
             { name: 'Noticias', href: '/noticias' },
-            { name: 'Recreo', href: '/#recreo' },
-            { name: 'Contacto', href: '/#contacto' },
+            { name: 'Recreo', href: '/recreo' },
+            { name: 'Contacto', href: '/contacto' },
         ],
         EN: [
-            { name: 'Services', href: '/#servicios' },
-            { name: 'Portfolio', href: '/#portfolio' },
+            { name: 'Services', href: '/servicios' },
+            { name: 'Portfolio', href: '/portafolio' },
             { name: 'News', href: '/noticias' },
-            { name: 'Recreo', href: '/#recreo' },
-            { name: 'Contact', href: '/#contacto' },
+            { name: 'Recreo', href: '/recreo' },
+            { name: 'Contact', href: '/contacto' },
         ],
         FR: [
-            { name: 'Services', href: '/#servicios' },
-            { name: 'Portfolio', href: '/#portfolio' },
+            { name: 'Services', href: '/servicios' },
+            { name: 'Portfolio', href: '/portafolio' },
             { name: 'Actualités', href: '/noticias' },
-            { name: 'Récréation', href: '/#recreo' },
-            { name: 'Contact', href: '/#contacto' },
+            { name: 'Récréation', href: '/recreo' },
+            { name: 'Contact', href: '/contacto' },
         ]
     };
 

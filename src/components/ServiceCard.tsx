@@ -69,7 +69,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, locale, index }) => 
     };
 
     return (
-        <Link to={`/services/${serviceSlug}`} className="block h-full group">
+        <Link to={`/servicios/${serviceSlug}`} className="block h-full group">
             <motion.div
                 ref={cardRef}
                 variants={cardVariants}

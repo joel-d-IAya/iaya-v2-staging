@@ -18,6 +18,10 @@ export interface Translation {
     slug?: string;
     nexus?: string;
     source?: string;
+    challenge?: string;
+    solution?: string;
+    excerpt?: string;
+    results_metrics?: string;
 }
 
 export interface Service {
@@ -53,11 +57,23 @@ export interface RecreoItem {
 }
 
 
-export interface Project {
-    id: string;
-    tech_stack?: string[];
-    image?: string;
+export interface PortfolioItem {
+    id: string | number;
+    slug: string;
+    status: string;
+    accent_color: string;
+    main_icon?: string;
+    main_image?: string;
+    home_size?: {
+        tailwind_class: string;
+    };
+    show_on_home?: boolean;
+    related_url?: string;
+    sort?: number;
     translations: Translation[];
+    portfolio_translations?: Translation[];
+    sub_services?: any[]; // Junctions or populated sub-services
+    files?: any[]; // portfolio_files
 }
 
 // --- Helpers ---
@@ -72,22 +88,26 @@ const langMap: Record<string, string> = {
     'EN': 'en-US'
 };
 
-export const getLocalizedContent = <T extends { translations?: Translation[] }>(
-    item: T,
+export const getLocalizedContent = (
+    item: any,
     currentLang: string
 ): Translation => {
-    const translations = item.translations || [];
+    const translations = (item?.translations?.length > 0 ? item.translations : null) ||
+        (item?.portfolio_translations?.length > 0 ? item.portfolio_translations : null) ||
+        (item?.projects_translations?.length > 0 ? item.projects_translations : null) ||
+        (item?.daily_news_translations?.length > 0 ? item.daily_news_translations : null) ||
+        [];
     if (translations.length === 0) return {};
 
     const targetCode = langMap[currentLang] || currentLang;
 
     // 1. Try exact match
-    let translation = translations.find(t => t.languages_code === targetCode);
+    let translation = translations.find((t: any) => t.languages_code === targetCode);
 
     // 2. Try partial match (e.g. "FR" in "fr-FR")
     if (!translation) {
         const lowerLang = currentLang.toLowerCase();
-        translation = translations.find(t => t.languages_code?.toLowerCase().startsWith(lowerLang));
+        translation = translations.find((t: any) => t.languages_code?.toLowerCase().startsWith(lowerLang));
     }
 
     // 3. Absolute fallback: take the first translation record available
@@ -110,7 +130,10 @@ export const getUiLabels = (currentLang: string) => {
         nexusLabel: 'Impact sur le Marché Équatorien',
         source: 'Source',
         nextNews: 'Actualité suivante',
-        prevNews: 'Actualité précédente'
+        prevNews: 'Actualité précédente',
+        exploreCaseStudy: 'Explorer le cas d\'étude',
+        newsArchive: 'Actualités',
+        serviceDetails: 'Plus de détails sur ce service'
     };
     if (lang === 'en') return {
         cta: 'Discover more',
@@ -122,7 +145,10 @@ export const getUiLabels = (currentLang: string) => {
         nexusLabel: 'Impact on the Ecuadorian Market',
         source: 'Source',
         nextNews: 'Next News',
-        prevNews: 'Previous News'
+        prevNews: 'Previous News',
+        exploreCaseStudy: 'Explore Case Study',
+        newsArchive: 'Archive',
+        serviceDetails: 'More details about this service'
     };
     return {
         cta: 'Descubrir más',
@@ -130,11 +156,14 @@ export const getUiLabels = (currentLang: string) => {
         live: 'Última noticia',
         today: 'Hoy',
         yesterday: 'Ayer',
-        readAllNews: 'Leer toutes les noticias',
+        readAllNews: 'Leer todas las noticias',
         nexusLabel: 'Impacto por el Mercado Ecuatoriano',
         source: 'Fuente',
         nextNews: 'Siguiente noticia',
-        prevNews: 'Noticia anterior'
+        prevNews: 'Noticia anterior',
+        exploreCaseStudy: 'Explorar Caso de Éxito',
+        newsArchive: 'Noticias',
+        serviceDetails: 'Más detalles sobre este servicio'
     }; // Default to ES
 };
 
@@ -166,6 +195,34 @@ export const getAccentColor = (colorName: string): string => {
 
     // Return the color directly (handles hex, oklch, and standard CSS color names)
     return colorName;
+};
+
+/**
+ * WCAG 2.2 Contrast Helper
+ * Determines if text should be black or white based on background color luminance.
+ */
+export const getContrastColor = (hexOrName: string): 'black' | 'white' => {
+    if (!hexOrName) return 'white';
+
+    // Default system colors for IAya
+    if (hexOrName.includes('orange')) return 'white';
+    if (hexOrName.includes('turquoise')) return 'black';
+
+    // Very basic check for standard colors
+    const lightColors = ['white', 'yellow', 'cyan', 'lime', 'pink'];
+    if (lightColors.includes(hexOrName.toLowerCase())) return 'black';
+
+    // For hex colors
+    if (hexOrName.startsWith('#')) {
+        const hex = hexOrName.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return luminance > 0.5 ? 'black' : 'white';
+    }
+
+    return 'white';
 };
 
 // --- API Calls ---
@@ -229,8 +286,61 @@ export const fetchRecreo = () =>
     fetcher<RecreoItem>('recreo?fields=*,translations.*');
 
 
-export const fetchProjects = () =>
-    fetcher<Project>('projects?fields=*,translations.*&limit=3');
+export const fetchPortfolio = async () => {
+    const data = await fetcher<PortfolioItem>('portfolio?fields=*,home_size.tailwind_class,translations.*,portfolio_translations.*&filter[status][_eq]=published&filter[show_on_home][_eq]=true&sort=sort');
+
+    // Add translations fallback for each item
+    for (const item of data) {
+        if (!item.portfolio_translations || item.portfolio_translations.length === 0) {
+            item.portfolio_translations = await fetcher<any>(`portfolio_translations?filter[portfolio_id][_eq]=${item.id}`);
+        }
+    }
+    return data;
+};
+
+export const fetchAllPortfolio = async () => {
+    const data = await fetcher<PortfolioItem>('portfolio?fields=*,home_size.tailwind_class,translations.*,portfolio_translations.*&filter[status][_eq]=published&sort=sort');
+
+    // Add translations fallback for each item
+    for (const item of data) {
+        if (!item.portfolio_translations || item.portfolio_translations.length === 0) {
+            item.portfolio_translations = await fetcher<any>(`portfolio_translations?filter[portfolio_id][_eq]=${item.id}`);
+        }
+    }
+    return data;
+};
+
+export const fetchPortfolioBySlug = async (slug: string) => {
+    const data = await fetcher<any>(`portfolio?fields=*,translations.*,portfolio_translations.*,portfolio_sub_services.sub_services_id.*,portfolio_sub_services.sub_services_id.translations.*,portfolio_sub_services.sub_services_id.portfolio_translations.*,portfolio_files.directus_files_id.*&filter[slug][_eq]=${encodeURIComponent(slug)}&filter[status][_eq]=published`);
+
+    if (data.length === 0) return null;
+
+    const p = data[0];
+
+    // Fallback for translations if missing from alias
+    if (!p.portfolio_translations || p.portfolio_translations.length === 0) {
+        const trans = await fetcher<any>(`portfolio_translations?filter[portfolio_id][_eq]=${p.id}`);
+        p.portfolio_translations = trans;
+    }
+
+    // Fallback for sub_services if missing from alias
+    let subServicesJunctions = p.portfolio_sub_services || p.sub_services;
+    if (!subServicesJunctions || subServicesJunctions.length === 0) {
+        subServicesJunctions = await fetcher<any>(`portfolio_sub_services?fields=*,sub_services_id.*,sub_services_id.translations.*&filter[portfolio_id][_eq]=${p.id}`);
+    }
+
+    // Fallback for files if missing from alias
+    let filesJunctions = p.portfolio_files || p.files;
+    if (!filesJunctions || filesJunctions.length === 0) {
+        filesJunctions = await fetcher<any>(`portfolio_files?fields=*,directus_files_id.*&filter[portfolio_id][_eq]=${p.id}`);
+    }
+
+    return {
+        ...p,
+        sub_services: subServicesJunctions?.map((j: any) => j.sub_services_id).filter((s: any) => s && (s.status === 'published' || !s.status)) || [],
+        files: filesJunctions?.map((j: any) => j.directus_files_id).filter((f: any) => f) || []
+    } as PortfolioItem;
+};
 
 /**
  * Combined loader to verify initial state
@@ -240,7 +350,7 @@ export const initApp = async () => {
         fetchServices(),
         fetchNews(),
         fetchRecreo(),
-        fetchProjects()
+        fetchPortfolio()
     ]);
 
     const success = results.every(r => r.status === 'fulfilled');

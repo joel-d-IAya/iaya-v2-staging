@@ -6,6 +6,10 @@ import ServicePage from './pages/ServicePage'
 import ServicesIndexPage from './pages/ServicesIndexPage'
 import NewsPage from './pages/NewsPage'
 import NewsDetailPage from './pages/NewsDetailPage'
+import PortfolioDetailPage from './pages/PortfolioDetailPage'
+import PortfolioPage from './pages/PortfolioPage'
+import RecreoPage from './pages/RecreoPage'
+import ContactoPage from './pages/ContactoPage'
 import { initApp } from './services/api'
 import logo from './assets/topnav_IAya.png'
 
@@ -23,11 +27,15 @@ function App() {
       <main className="relative">
         <Routes>
           <Route path="/" element={<HomePage activeLang={activeLang} />} />
-          <Route path="/services" element={<ServicesIndexPage activeLang={activeLang} />} />
-          <Route path="/services/:serviceSlug" element={<ServicePage activeLang={activeLang} />} />
-          <Route path="/services/:serviceSlug/:subServiceSlug" element={<ServicePage activeLang={activeLang} />} />
+          <Route path="/servicios" element={<ServicesIndexPage activeLang={activeLang} />} />
+          <Route path="/servicios/:serviceSlug" element={<ServicePage activeLang={activeLang} />} />
+          <Route path="/servicios/:serviceSlug/:subServiceSlug" element={<ServicePage activeLang={activeLang} />} />
           <Route path="/noticias" element={<NewsPage activeLang={activeLang} />} />
-          <Route path="/news/:slug" element={<NewsDetailPage activeLang={activeLang} />} />
+          <Route path="/noticias/:slug" element={<NewsDetailPage activeLang={activeLang} />} />
+          <Route path="/portafolio" element={<PortfolioPage activeLang={activeLang} />} />
+          <Route path="/portafolio/:slug" element={<PortfolioDetailPage activeLang={activeLang} />} />
+          <Route path="/recreo" element={<RecreoPage activeLang={activeLang} />} />
+          <Route path="/contacto" element={<ContactoPage activeLang={activeLang} />} />
         </Routes>
 
         {/* Footer Signature */}

@@ -78,7 +78,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
     const historyFeed = news.slice(1, 4);
 
     return (
-        <section id="pulse" className="py-24 bg-iaya-bg border-t border-white/5 overflow-hidden">
+        <section id="noticias" className="py-24 bg-iaya-bg border-t border-white/5 overflow-hidden">
             <div className="max-w-7xl mx-auto px-8">
                 <div className="flex items-center justify-between mb-16">
                     <div>
@@ -110,7 +110,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                     onClick={() => {
                                         const content = getLocalizedContent(heroNews, locale);
                                         const slug = content.slug || heroNews.slug || (content.title ? toSlug(content.title) : heroNews.id);
-                                        window.location.href = `/news/${slug}`;
+                                        window.location.href = `/noticias/${slug}`;
                                     }}
                                 >
                                     {getLocalizedContent(heroNews, locale).title || "Untitled News"}
@@ -168,7 +168,7 @@ export default function PulseGrid({ locale }: { locale: string }) {
                                 transition={{ delay: 0.2 + idx * 0.1 }}
                                 viewport={{ once: true }}
                                 className="col-span-1 md:col-span-4 group cursor-pointer"
-                                onClick={() => window.location.href = `/news/${slug}`}
+                                onClick={() => window.location.href = `/noticias/${slug}`}
                             >
                                 <div className="relative aspect-square rounded-[24px] overflow-hidden border border-white/10 bg-white/5 mb-6">
                                     {item.image && (
