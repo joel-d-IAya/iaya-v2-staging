@@ -27,7 +27,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
-            link: '#noticias'
+            link: '#PulseGrid' // This was #noticias, keeping it functional or mapping to grid id
         },
         {
             id: 1,
@@ -38,7 +38,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
-            link: '#servicios'
+            link: '#ServicesGrid'
         },
         {
             id: 2,
@@ -50,7 +50,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
-            link: '#portafolio'
+            link: '#origen'
         },
         {
             id: 3,
@@ -72,7 +72,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(94% 0.08 250 / 35%)',
             auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
-            link: '#contacto'
+            link: '#nexo'
         }
     ],
     EN: [
@@ -85,7 +85,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
-            link: '#noticias'
+            link: '#PulseGrid'
         },
         {
             id: 1,
@@ -96,7 +96,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
-            link: '#servicios'
+            link: '#ServicesGrid'
         },
         {
             id: 2,
@@ -108,7 +108,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
-            link: '#portafolio'
+            link: '#origen'
         },
         {
             id: 3,
@@ -130,7 +130,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(94% 0.08 250 / 35%)',
             auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
-            link: '#contacto'
+            link: '#nexo'
         }
     ],
     FR: [
@@ -143,7 +143,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
-            link: '#noticias'
+            link: '#PulseGrid'
         },
         {
             id: 1,
@@ -154,7 +154,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
-            link: '#servicios'
+            link: '#ServicesGrid'
         },
         {
             id: 2,
@@ -166,7 +166,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             auraColor: 'oklch(70% 0.3 45 / 60%)',
             baseRotation: 0,
             scale: 1.1,
-            link: '#portafolio'
+            link: '#origen'
         },
         {
             id: 3,
@@ -188,7 +188,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(94% 0.08 250 / 35%)',
             auraColor: 'oklch(94% 0.12 250 / 70%)',
             baseRotation: 8,
-            link: '#contacto'
+            link: '#nexo'
         }
     ]
 };

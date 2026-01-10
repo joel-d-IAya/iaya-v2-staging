@@ -11,10 +11,12 @@ export default {
                 outfit: ['Outfit', 'sans-serif'],
             },
             colors: {
-                'iaya-bg': 'oklch(15% 0.02 260)',
-                'iaya-nav': '#141B2D',
-                'iaya-orange': 'oklch(65% 0.20 45)',
-                'iaya-turquoise': 'oklch(70% 0.15 190)',
+                'iaya-bg': 'oklch(0.15 0.01 240)',
+                'iaya-nav': 'oklch(0.18 0.01 240)',
+                'iaya-ocre': 'oklch(0.65 0.18 45)',
+                'iaya-emerald': 'oklch(0.70 0.15 160)',
+                'iaya-orange': 'oklch(65% 0.20 45)', // Keeping for compatibility if used elsewhere
+                'iaya-turquoise': 'oklch(70% 0.15 190)', // Keeping for compatibility
             },
         },
     },

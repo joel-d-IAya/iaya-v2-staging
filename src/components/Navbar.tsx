@@ -23,21 +23,24 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
             { name: 'Portafolio', href: '/portafolio' },
             { name: 'Noticias', href: '/noticias' },
             { name: 'Recreo', href: '/recreo' },
-            { name: 'Contacto', href: '/contacto' },
+            { name: 'Origen', href: '/origen' },
+            { name: 'Contacto', href: '/#nexo' },
         ],
         EN: [
             { name: 'Services', href: '/servicios' },
             { name: 'Portfolio', href: '/portafolio' },
             { name: 'News', href: '/noticias' },
             { name: 'Recreo', href: '/recreo' },
-            { name: 'Contact', href: '/contacto' },
+            { name: 'Origin', href: '/origen' },
+            { name: 'Contact', href: '/#nexo' },
         ],
         FR: [
             { name: 'Services', href: '/servicios' },
             { name: 'Portfolio', href: '/portafolio' },
             { name: 'Actualités', href: '/noticias' },
             { name: 'Récréation', href: '/recreo' },
-            { name: 'Contact', href: '/contacto' },
+            { name: 'Origen', href: '/origen' },
+            { name: 'Contact', href: '/#nexo' },
         ]
     };
 
@@ -46,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
 
     return (
         <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-7xl">
-            <div className="flex items-center justify-between px-8 py-3 bg-[#141B2D] backdrop-blur-[12px] border border-white/10 rounded-full shadow-2xl">
+            <div className="flex items-center justify-between px-8 py-3 bg-iaya-nav backdrop-blur-[12px] border border-white/10 rounded-full shadow-2xl">
                 {/* Logo */}
                 <Link to="/" className="flex-shrink-0">
                     <img src={logo} alt="IAya Logo" className="h-10 w-auto object-contain cursor-pointer" />
@@ -55,18 +58,18 @@ const Navbar: React.FC<NavbarProps> = ({ activeLang, setActiveLang }) => {
                 {/* Navigation Links */}
                 <div className="hidden lg:flex items-center gap-8">
                     {links.map((link: any) => (
-                        <a
+                        <Link
                             key={link.name}
-                            href={link.href}
+                            to={link.href}
                             onMouseEnter={() => setHoveredLink(link.name)}
                             onMouseLeave={() => setHoveredLink(null)}
                             className="relative text-[14px] font-outfit font-medium uppercase tracking-[0.05em] transition-colors duration-300"
                             style={{
-                                color: hoveredLink === link.name ? 'oklch(65% 0.20 45)' : 'white'
+                                color: hoveredLink === link.name ? 'oklch(0.65 0.18 45)' : 'white'
                             }}
                         >
                             {link.name}
-                        </a>
+                        </Link>
                     ))}
                 </div>
 

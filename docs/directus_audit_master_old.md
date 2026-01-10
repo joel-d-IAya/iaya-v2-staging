@@ -1,5 +1,5 @@
 # 🛡️ Audit Technique Directus - IAya Agency
-Généré le : 2026-01-10 01:27:18
+Généré le : 2026-01-07 21:07:34
 
 ## 📦 État des Collections
 
@@ -290,14 +290,6 @@ Généré le : 2026-01-10 01:27:18
 | show_on_home | boolean | boolean |  |
 | related_url | string | input |  |
 | sort | integer | input |  |
-| main_image | uuid | file-image |  |
-| used_services | alias | list-m2m |  |
-| translations | alias | translations |  |
-| used_sub_services | alias | list-m2m |  |
-| illustrations | alias | list-m2m |  |
-
-**🔗 Relations :**
-- Champ `main_image` lie vers `directus_files`
 
 ---
 
@@ -318,23 +310,6 @@ Généré le : 2026-01-10 01:27:18
 
 ---
 
-### 📑 Collection : `portfolio_portfolio_files`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| directus_files_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `directus_files_id` lie vers `portfolio_files`
-
----
-
 ### 📑 Collection : `portfolio_services`
 - **Dossier parent** : `Portfolio` (`portfolio_group`)
 - **Statut UI** : 🚫 CACHÉE
@@ -347,25 +322,8 @@ Généré le : 2026-01-10 01:27:18
 | services_id | integer | None |  |
 
 **🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
 - Champ `services_id` lie vers `services`
-
----
-
-### 📑 Collection : `portfolio_services_1`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| services_id | integer | None |  |
-
-**🔗 Relations :**
 - Champ `portfolio_id` lie vers `portfolio`
-- Champ `services_id` lie vers `services`
 
 ---
 
@@ -383,40 +341,6 @@ Généré le : 2026-01-10 01:27:18
 **🔗 Relations :**
 - Champ `sub_services_id` lie vers `sub_services`
 - Champ `portfolio_id` lie vers `portfolio`
-
----
-
-### 📑 Collection : `portfolio_sub_services_1`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| sub_services_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `sub_services_id` lie vers `sub_services`
-
----
-
-### 📑 Collection : `portfolio_sub_services_2`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| sub_services_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `sub_services_id` lie vers `sub_services`
 
 ---
 
@@ -449,23 +373,6 @@ Généré le : 2026-01-10 01:27:18
 | Champ | Type | Interface | Note |
 | :--- | :--- | :--- | :--- |
 | id | integer | None |  |
-
----
-
-### 📑 Collection : `portfolio_translations_2`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| languages_code | string | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `languages_code` lie vers `languages`
 
 ---
 
@@ -535,25 +442,6 @@ Généré le : 2026-01-10 01:27:18
 
 ---
 
-### 📑 Collection : `prospects`
-- **Dossier parent** : `AIya_CRM` (`AIya_CRM`)
-- **Statut UI** : ✅ VISIBLE
-- **Icône** : person_add
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | numeric |  |
-| status | string | select-dropdown |  |
-| language | string | select-dropdown |  |
-| first_name | string | input |  |
-| last_name | string | input |  |
-| email | string | input |  |
-| whatsapp | string | input | Contact prioritaire via WhatsApp |
-| expectations | json | select-multiple-checkbox |  |
-| project_description | text | textarea | Précisez vos défis ou votre vision. |
-
----
-
 ### 📑 Collection : `recreo_content`
 - **Dossier parent** : `IAya_online` (`IAya_online`)
 - **Statut UI** : ✅ VISIBLE
@@ -587,7 +475,6 @@ Généré le : 2026-01-10 01:27:18
 | home_size | integer | select-relational |  |
 | page_size | integer | select-relational |  |
 | slug | string | slug |  |
-| portfolios | alias | list-m2m |  |
 | translations | alias | translations | Interface de traduction |
 | sub_services | alias | list-m2m | Liste des atomes sélectionnés |
 
@@ -651,7 +538,6 @@ Généré le : 2026-01-10 01:27:18
 | sort | integer | input | Manual sorting order |
 | page_size | integer | select-relational |  |
 | slug | string | slug |  |
-| portfolio_subs | alias | list-m2m |  |
 | translations | alias | translations | Interface de traduction |
 
 **🔗 Relations :**

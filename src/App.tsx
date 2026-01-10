@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import ServicePage from './pages/ServicePage'
@@ -9,19 +9,33 @@ import NewsDetailPage from './pages/NewsDetailPage'
 import PortfolioDetailPage from './pages/PortfolioDetailPage'
 import PortfolioPage from './pages/PortfolioPage'
 import RecreoPage from './pages/RecreoPage'
-import ContactoPage from './pages/ContactoPage'
+import OrigenPage from './pages/OrigenPage'
 import { initApp } from './services/api'
 import logo from './assets/topnav_IAya.png'
 
 function App() {
   const [activeLang, setActiveLang] = useState('ES')
+  const location = useLocation()
 
   useEffect(() => {
     initApp();
   }, []);
 
+  // Handle hash scroll
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   return (
-    <div className="min-h-screen bg-iaya-bg text-white selection:bg-iaya-orange selection:text-white">
+    <div className="min-h-screen bg-iaya-bg text-white selection:bg-iaya-ocre selection:text-white">
       <Navbar activeLang={activeLang} setActiveLang={setActiveLang} />
 
       <main className="relative">
@@ -35,7 +49,8 @@ function App() {
           <Route path="/portafolio" element={<PortfolioPage activeLang={activeLang} />} />
           <Route path="/portafolio/:slug" element={<PortfolioDetailPage activeLang={activeLang} />} />
           <Route path="/recreo" element={<RecreoPage activeLang={activeLang} />} />
-          <Route path="/contacto" element={<ContactoPage activeLang={activeLang} />} />
+          <Route path="/origen" element={<OrigenPage activeLang={activeLang} />} />
+          <Route path="/contacto" element={<OrigenPage activeLang={activeLang} />} />
         </Routes>
 
         {/* Footer Signature */}
