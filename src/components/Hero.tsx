@@ -27,7 +27,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
-            link: '#PulseGrid' // This was #noticias, keeping it functional or mapping to grid id
+            link: '#noticias'
         },
         {
             id: 1,
@@ -38,7 +38,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
-            link: '#ServicesGrid'
+            link: '#servicios'
         },
         {
             id: 2,
@@ -85,7 +85,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
-            link: '#PulseGrid'
+            link: '#noticias'
         },
         {
             id: 1,
@@ -96,7 +96,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
-            link: '#ServicesGrid'
+            link: '#servicios'
         },
         {
             id: 2,
@@ -143,7 +143,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(70% 0.25 45 / 30%)',
             auraColor: 'oklch(70% 0.35 45 / 60%)',
             baseRotation: -8,
-            link: '#PulseGrid'
+            link: '#noticias'
         },
         {
             id: 1,
@@ -154,7 +154,7 @@ const LOCALIZED_CARDS: Record<string, CardProps[]> = {
             color: 'oklch(75% 0.22 190 / 30%)',
             auraColor: 'oklch(75% 0.3 190 / 60%)',
             baseRotation: -4,
-            link: '#ServicesGrid'
+            link: '#servicios'
         },
         {
             id: 2,
@@ -485,7 +485,7 @@ export default function Hero({ locale = 'ES' }: { locale?: string }) {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative min-h-screen bg-iaya-bg overflow-hidden pt-32 pb-48 sm:pb-64 flex flex-col items-center"
+            className="relative min-h-[calc(100vh-80px)] bg-iaya-bg overflow-hidden pt-32 pb-28 sm:pb-44 flex flex-col items-center"
         >
             <div className="absolute inset-0 bg-radial-[at_50%_30%] from-white/10 via-transparent to-transparent pointer-events-none" />
 
@@ -534,9 +534,9 @@ export default function Hero({ locale = 'ES' }: { locale?: string }) {
                     y: mountainsY,
                     bottom: '0px',
                 }}
-                className="absolute left-0 w-full z-50 pointer-events-none"
+                className="absolute left-0 w-full z-[60] pointer-events-none"
             >
-                <div className="mountain-container relative w-full flex justify-center translate-y-[-35px]">
+                <div className="mountain-container relative w-full flex justify-center translate-y-[-110px]">
                     <img
                         src={andes}
                         alt="Andes Mountains"

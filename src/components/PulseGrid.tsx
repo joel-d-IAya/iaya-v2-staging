@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { fetchNews, getAssetUrl, getUiLabels, getLocalizedContent, type NewsItem, toSlug } from '../services/api';
+import SectionHeader from './SectionHeader';
 
-const TEXTS: Record<string, { title: string, subtitle: string }> = {
-    ES: { title: 'PULSE / NEWS', subtitle: 'Las últimas noticias de IA' },
-    EN: { title: 'PULSE / NEWS', subtitle: 'Latest AI News' },
-    FR: { title: 'PULSE / ACTUALITÉS', subtitle: 'Dernières nouvelles de l\'IA' }
+const TEXTS: Record<string, { title: string, subtitle: string, intro: string }> = {
+    ES: { title: 'PULSE / NEWS', subtitle: 'Las últimas noticias de IA', intro: 'ÚLTIMAS NOTICIAS DE LA IA' },
+    EN: { title: 'PULSE / NEWS', subtitle: 'Latest AI News', intro: 'LATEST AI NEWS' },
+    FR: { title: 'PULSE / NEWS', subtitle: 'Dernières nouvelles de l\'IA', intro: 'DERNIÈRES NOUVELLES DE L\'IA' }
 };
 
 const PulseIndicator = ({ label }: { label: string }) => (
@@ -78,16 +79,12 @@ export default function PulseGrid({ locale }: { locale: string }) {
     const historyFeed = news.slice(1, 4);
 
     return (
-        <section id="noticias" className="py-24 bg-iaya-bg border-t border-white/5 overflow-hidden">
+        <section id="noticias" className="py-32 bg-iaya-bg relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-8">
-                <div className="flex items-center justify-between mb-16">
-                    <div>
-                        <h2 className="text-4xl font-outfit font-bold text-white tracking-tighter mb-2">
-                            PULSE / <span className="text-iaya-orange">NEWS</span>
-                        </h2>
-                        <p className="text-white/40 font-inter text-sm">{t.subtitle}</p>
-                    </div>
-                </div>
+                <SectionHeader
+                    intro={t.intro}
+                    title={t.title}
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
                     {/* Hero News: Redesigned Layout */}

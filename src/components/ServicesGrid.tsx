@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import type { Service } from '../services/api';
 import { fetchServices } from '../services/api';
 import ServiceCard from './ServiceCard';
+import SectionHeader from './SectionHeader';
 
 interface ServicesGridProps {
     locale: string;
 }
 
-const TEXTS: Record<string, { badge: string; title: string }> = {
-    ES: { badge: 'Nuestra Expertise', title: 'Servicios de Clase Mundial' },
-    EN: { badge: 'Our Expertise', title: 'World Class Services' },
-    FR: { badge: 'Notre Expertise', title: 'Services de Classe Mondiale' }
+const TEXTS: Record<string, { intro: string; title: string }> = {
+    ES: { intro: 'NUESTRA EXPERTISE', title: 'Servicios de Clase Mundial' },
+    EN: { intro: 'OUR EXPERTISE', title: 'World Class Services' },
+    FR: { intro: 'NOTRE EXPERTISE', title: 'Services de Classe Mondiale' }
 };
 
 const GRID_MAP: Record<string, string> = {
@@ -46,27 +47,12 @@ const ServicesGrid: React.FC<ServicesGridProps> = ({ locale }) => {
     const t = TEXTS[locale] || TEXTS.ES;
 
     return (
-        <section id="servicios" className="relative py-32 bg-[oklch(22%_0.02_250)]">
+        <section id="servicios" className="relative py-32 bg-iaya-bg">
             <div className="max-w-7xl mx-auto px-8">
-                <header className="mb-20 text-center lg:text-left">
-                    <motion.span
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-iaya-orange font-outfit uppercase tracking-[0.3em] text-sm mb-6 block font-bold"
-                    >
-                        {t.badge}
-                    </motion.span>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-5xl sm:text-7xl font-outfit font-bold text-white tracking-tighter"
-                    >
-                        {t.title}
-                    </motion.h2>
-                </header>
+                <SectionHeader
+                    intro={t.intro}
+                    title={t.title}
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-auto">
                     <AnimatePresence mode="popLayout" initial={false}>

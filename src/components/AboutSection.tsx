@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { HeartHandshake } from 'lucide-react';
 import joelImage from '../assets/joel.png';
+import SectionHeader from './SectionHeader';
 
 interface AboutSectionProps {
     locale: string;
@@ -10,37 +11,49 @@ interface AboutSectionProps {
 const AboutSection: React.FC<AboutSectionProps> = ({ locale }) => {
     const content = {
         FR: {
-            title: "Une agence d’IA différente. Fièrement basée à Cuenca.",
+            intro: "QUI SOMMES-NOUS ?",
+            title: "L'origine de l'agence IAya",
+            heroTitle: "Une agence d’IA différente. Fièrement basée à Cuenca.",
             subtitle: "De Bruxelles à l'Azuay, l'artisanat numérique au service de l'humain et de sa communauté.",
             body: "Après 20 ans de stratégie numérique en Europe, j’ai choisi Cuenca pour fonder IAya. Plus qu’une agence, c’est un engagement : rendre la technologie IA utile, bénéficiable et accessible à notre région. Ici, nous ne vendons pas de magie, nous construisons des outils de proximité avec un regard humain.",
             impact: "Notre technologie a du cœur. Nous croyons en un impact local positif. IAya soutient activement le tissu associatif de l'Azuay en offrant des tarifs préférentiels aux ONGs locales.",
             cta: "Découvrir notre histoire"
         },
         ES: {
-            title: "Una agencia de IA diferente. Orgullosamente basados en Cuenca.",
+            intro: "¿QUIÉNES SOMOS?",
+            title: "El origen de la agencia IAya",
+            heroTitle: "Una agencia de IA diferente. Orgullosamente basados en Cuenca.",
             subtitle: "De Bruselas a la Azuay, artesanía digital al servicio del ser humano y de su comunidad.",
             body: "Tras 20 años de estrategia digital en Europa, elegí Cuenca para fundar IAya. Más que una agencia, es un compromiso: hacer la tecnología IA útil, beneficiosa y accesible para nuestra región. Aquí no vendemos magia, construimos herramientas de proximidad con una mirada humana.",
             impact: "Nuestra tecnología tiene corazón. Creemos en un impacto local positivo. IAya apoya activamente al tejido asociativo del Azuay ofreciendo tarifas preferenciales a las ONGs locales.",
             cta: "Descubrir nuestra historia"
         },
         EN: {
-            title: "A different kind of AI agency. Proudly based in Cuenca.",
+            intro: "WHO ARE WE?",
+            title: "The origin of IAya agency",
+            heroTitle: "A different kind of AI agency. Proudly based in Cuenca.",
             subtitle: "From Brussels to Azuay, digital craftsmanship serving humans and their community.",
             body: "After 20 years of digital strategy in Europe, I chose Cuenca to found IAya. More than an agency, it's a commitment: making AI technology useful, beneficial, and accessible to our region. Here, we don't sell magic; we build proximity tools with a human touch.",
             impact: "Our technology has a heart. We believe in a positive local impact. IAya actively supports Azuay's non-profit sector by offering preferential rates to local NGOs.",
             cta: "Discover our story"
         }
     }[locale] || {
-        title: "Una agencia de IA diferente. Orgullosamente basados en Cuenca.",
+        intro: "¿QUIÉNES SOMOS?",
+        title: "El origen de la agencia IAya",
+        heroTitle: "Una agencia de IA diferente. Orgullosamente basados en Cuenca.",
         subtitle: "De Bruselas a la Azuay, artesanía digital al servicio del ser humano y de su comunidad.",
         body: "Tras 20 años de estrategia digital en Europa, elegí Cuenca para fundar IAya. Más que una agencia, es un compromiso: hacer la tecnología IA útil, beneficiosa y accesible para nuestra región. Aquí no vendemos magia, construimos herramientas de proximidad con una mirada humana.",
         impact: "Nuestra tecnología tiene corazón. Creemos en un impacto local positivo. IAya apoya activamente al tejido asociativo del Azuay ofreciendo tarifas preferenciales a las ONGs locales.",
         cta: "Descubrir nuestra historia"
-    };
+    } as any;
 
     return (
-        <section id="origen" className="py-24 bg-iaya-bg overflow-hidden">
+        <section id="origen" className="py-32 bg-iaya-bg overflow-hidden">
             <div className="max-w-7xl mx-auto px-8">
+                <SectionHeader
+                    intro={content.intro}
+                    title={content.title}
+                />
                 {/* Bento Grid Header */}
                 <div className="grid grid-cols-12 gap-8 items-stretch mb-8">
                     {/* Text Block - 60% */}
@@ -54,9 +67,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({ locale }) => {
                         {/* Decorative Gradient */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-iaya-ocre/10 rounded-full blur-[100px] -mr-32 -mt-32 transition-all duration-700 group-hover:bg-iaya-ocre/20" />
 
-                        <h2 className="text-4xl lg:text-5xl font-outfit font-bold text-white mb-6 tracking-tighter leading-[1.1]">
-                            {content.title}
-                        </h2>
+                        <h3 className="text-4xl lg:text-5xl font-outfit font-bold text-white mb-6 tracking-tighter leading-[1.1]">
+                            {content.heroTitle}
+                        </h3>
                         <h3 className="text-xl lg:text-2xl font-outfit text-iaya-ocre mb-8 font-medium italic opacity-90 leading-relaxed">
                             {content.subtitle}
                         </h3>

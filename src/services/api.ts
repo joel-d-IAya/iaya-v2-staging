@@ -50,10 +50,17 @@ export interface NewsItem {
 }
 
 export interface RecreoItem {
-    id: string;
-    youtube_id?: string;
-    video_url?: string;
-    translations: Translation[];
+    id: string | number;
+    title: string;
+    video_id?: string;
+    language?: string;
+    publish_date?: string;
+    podcast_fr?: string;
+    podcast_es?: string;
+    podcast_en?: string;
+    infographic_square?: string;
+    infographic_hor?: string;
+    infographic_vert?: string;
 }
 
 
@@ -283,7 +290,7 @@ export const fetchAllNews = () =>
     fetcher<NewsItem>('daily_news?fields=*,translations.*&sort=-publish_date');
 
 export const fetchRecreo = () =>
-    fetcher<RecreoItem>('recreo?fields=*,translations.*');
+    fetcher<RecreoItem>('recreo_content?fields=*&sort=-publish_date');
 
 
 export const fetchPortfolio = async () => {

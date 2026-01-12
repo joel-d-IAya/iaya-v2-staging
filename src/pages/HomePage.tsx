@@ -17,10 +17,10 @@ const HomePage: React.FC<HomePageProps> = ({ activeLang }) => {
         <>
             <Hero locale={activeLang} />
             <ServicesGrid locale={activeLang} />
-            <AboutSection locale={activeLang} />
+            <PortfolioGrid locale={activeLang} />
             <PulseGrid locale={activeLang} />
             <RecreoSection locale={activeLang} />
-            <PortfolioGrid locale={activeLang} />
+            <AboutSection locale={activeLang} />
             <NexoForm locale={activeLang} />
         </>
     );

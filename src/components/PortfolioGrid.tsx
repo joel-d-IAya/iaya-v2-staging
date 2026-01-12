@@ -2,25 +2,26 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { fetchPortfolio, type PortfolioItem } from '../services/api';
 import PortfolioCard from './PortfolioCard';
+import SectionHeader from './SectionHeader';
 
-const TEXTS: Record<string, { title: string, subtitle: string, cta: string, badge: string }> = {
+const TEXTS: Record<string, { title: string, subtitle: string, cta: string, intro: string }> = {
     ES: {
-        title: 'Casos de Éxito',
+        title: 'Portfolio de nuestros Casos de Éxito',
         subtitle: 'Transformando visiones en realidades tangibles a través de la IA.',
         cta: 'Explorar todo el Portafolio',
-        badge: 'Portfolio'
+        intro: 'NUESTRAS REALIZACIONES'
     },
     EN: {
-        title: 'Success Stories',
+        title: 'Portfolio of our Success Stories',
         subtitle: 'Transforming visions into tangible realities through AI.',
         cta: 'Explore full Portfolio',
-        badge: 'Portfolio'
+        intro: 'OUR ACHIEVEMENTS'
     },
     FR: {
-        title: 'Cas de Réussite',
+        title: 'Portfolio de nos Cas de Réussite',
         subtitle: 'Transformer les visions en réalités tangibles grâce à l\'IA.',
         cta: 'Explorer tout le Portfolio',
-        badge: 'Portfolio'
+        intro: 'NOS RÉALISATIONS'
     }
 };
 
@@ -47,7 +48,7 @@ export default function PortfolioGrid({ locale }: { locale: string }) {
 
     // Skeleton loader
     if (loading && portfolio.length === 0) return (
-        <section id="portfolio" className="py-32 bg-iaya-bg">
+        <section id="portfolio" className="py-32 bg-[oklch(0.13_0.01_240)]">
             <div className="max-w-7xl mx-auto px-8">
                 <div className="h-96 rounded-[40px] bg-white/5 animate-pulse flex items-center justify-center">
                     <span className="font-outfit font-black italic text-2xl text-white/10 tracking-widest uppercase">IAya Portfolio...</span>
@@ -59,42 +60,23 @@ export default function PortfolioGrid({ locale }: { locale: string }) {
     if (portfolio.length === 0) return null;
 
     return (
-        <section id="portfolio" className="py-32 bg-iaya-bg relative overflow-hidden">
+        <section id="portfolio" className="py-32 bg-[oklch(0.13_0.01_240)] relative overflow-hidden">
             {/* Background elements for depth */}
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-iaya-turquoise/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
 
             <div className="max-w-7xl mx-auto px-8 relative z-10">
-
-                {/* Header Section */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
-                    <div className="max-w-3xl">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="flex items-center gap-4 mb-8"
-                        >
-                            <div className="w-12 h-[1px] bg-iaya-turquoise shadow-[0_0_10px_rgba(45,212,191,0.5)]" />
-                            <span className="text-iaya-turquoise font-outfit font-bold uppercase tracking-[0.4em] text-xs">
-                                {t.badge}
-                            </span>
-                        </motion.div>
-
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-5xl sm:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tighter mb-8 bg-gradient-to-br from-white via-white to-white/30 bg-clip-text text-transparent"
-                        >
-                            {t.title}
-                        </motion.h2>
-
+                <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-24 gap-12">
+                    <div className="flex-1">
+                        <SectionHeader
+                            intro={t.intro}
+                            title={t.title}
+                        />
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="text-white/40 font-inter text-lg sm:text-xl leading-relaxed max-w-xl"
+                            transition={{ delay: 0.6 }}
+                            className="text-white/40 font-inter text-lg sm:text-xl leading-relaxed max-w-xl -mt-12 mb-8"
                         >
                             {t.subtitle}
                         </motion.p>
@@ -106,10 +88,11 @@ export default function PortfolioGrid({ locale }: { locale: string }) {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         viewport={{ once: true }}
+                        transition={{ delay: 0.8 }}
                         onClick={() => window.location.href = '/portafolio'}
-                        className="group relative px-10 py-5 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all duration-500 hover:border-iaya-turquoise/40 shadow-xl"
+                        className="group relative px-10 py-5 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all duration-500 hover:border-iaya-ocre/40 shadow-xl self-start lg:self-end"
                     >
-                        <div className="absolute inset-0 bg-iaya-turquoise/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 bg-iaya-ocre/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                         <span className="relative z-10 font-outfit font-bold text-xs uppercase tracking-[0.2em] text-white flex items-center gap-3">
                             {t.cta}
                             <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

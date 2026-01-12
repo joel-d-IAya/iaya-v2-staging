@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Loader2, MessageCircle } from 'lucide-react';
 import backgroundIncaStones from '../assets/background-inca-stones.png';
+import SectionHeader from './SectionHeader';
 
 interface NexoFormProps {
     locale: string;
@@ -31,7 +32,9 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
 
     const content = {
         FR: {
-            title: "Contactez-nous !",
+            intro: "NOUS SOMMES À VOTRE SERVICE",
+            title: "Prenez Contact avec IAya",
+            formTitle: "Contactez-nous !",
             subtitle: "Comment vous appelez-vous ?",
             firstName: "Prénom",
             lastName: "Nom",
@@ -48,7 +51,9 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
             requiredField: "Ce champ est obligatoire."
         },
         ES: {
-            title: "¡Comuníquese con nosotros!",
+            intro: "ESTAMOS A SU SERVICIO",
+            title: "Póngase en contacto con IAya",
+            formTitle: "¡Comuníquese con nosotros!",
             subtitle: "¿Cómo se llama?",
             firstName: "Nombre",
             lastName: "Apellido",
@@ -65,7 +70,9 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
             requiredField: "Este campo es obligatorio."
         },
         EN: {
-            title: "Contact us!",
+            intro: "WE ARE AT YOUR SERVICE",
+            title: "Get in touch with IAya",
+            formTitle: "Contact us!",
             subtitle: "What is your name?",
             firstName: "First Name",
             lastName: "Last Name",
@@ -82,7 +89,9 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
             requiredField: "This field is required."
         }
     }[locale] || {
-        title: "¡Comuníquese con nosotros!",
+        intro: "ESTAMOS A SU SERVICIO",
+        title: "Póngase en contacto con IAya",
+        formTitle: "¡Comuníquese con nosotros!",
         subtitle: "¿Cómo se llama?",
         firstName: "Nombre",
         lastName: "Apellido",
@@ -175,19 +184,24 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
     };
 
     return (
-        <section id="nexo" className="py-24 bg-iaya-bg relative overflow-hidden">
+        <section id="nexo" className="py-32 bg-[oklch(0.13_0.01_240)] relative overflow-hidden">
             {/* Background Texture Overlay */}
             <div
                 className="absolute inset-0 opacity-[0.03] pointer-events-none bg-repeat bg-[length:400px]"
                 style={{ backgroundImage: `url(${backgroundIncaStones})` }}
             />
 
-            <div className="max-w-4xl mx-auto px-8 relative">
+            <div className="max-w-7xl mx-auto px-8 relative">
+                <SectionHeader
+                    intro={(content as any).intro}
+                    title={(content as any).title}
+                />
+
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="p-8 lg:p-16 rounded-[50px] bg-iaya-nav border border-white/10 backdrop-blur-2xl shadow-2xl relative"
+                    className="max-w-4xl mx-auto p-8 lg:p-16 rounded-[50px] bg-iaya-nav border border-white/10 backdrop-blur-2xl shadow-2xl relative"
                 >
                     {/* Glow effect */}
                     <div className="absolute -inset-1 bg-gradient-to-r from-iaya-ocre/20 to-iaya-emerald/20 rounded-[51px] blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -199,7 +213,7 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
                             </div>
                             <div className="flex flex-col gap-1">
                                 <h2 className="text-3xl lg:text-4xl font-outfit font-bold text-white tracking-tighter">
-                                    {content.title}
+                                    {(content as any).formTitle}
                                 </h2>
                                 <p className="text-iaya-ocre font-outfit text-sm uppercase tracking-[0.2em] font-bold">
                                     {content.subtitle}

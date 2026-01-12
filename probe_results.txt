@@ -1,4 +1,4 @@
-Services Keys: id, status, internal_name, show_on_home, accent_color, sort, main_icon, main_image, home_size, page_size, translations, sub_services
+Services Keys: id, status, internal_name, show_on_home, accent_color, sort, main_icon, main_image, home_size, page_size, slug, translations, sub_services
 Daily News Keys: id, status, image, image_name, publish_date, translations
 Collection [recreo] status: 403
 Collection [recreos] status: 403

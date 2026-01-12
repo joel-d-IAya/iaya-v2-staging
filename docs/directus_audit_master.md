@@ -1,5 +1,5 @@
 # 🛡️ Audit Technique Directus - IAya Agency
-Généré le : 2026-01-10 01:27:18
+Généré le : 2026-01-11 13:13:00
 
 ## 📦 État des Collections
 
@@ -291,13 +291,7 @@ Généré le : 2026-01-10 01:27:18
 | related_url | string | input |  |
 | sort | integer | input |  |
 | main_image | uuid | file-image |  |
-| used_services | alias | list-m2m |  |
-| translations | alias | translations |  |
-| used_sub_services | alias | list-m2m |  |
-| illustrations | alias | list-m2m |  |
-
-**🔗 Relations :**
-- Champ `main_image` lie vers `directus_files`
+| illustrations | alias | files |  |
 
 ---
 
@@ -313,25 +307,8 @@ Généré le : 2026-01-10 01:27:18
 | directus_files_id | uuid | None |  |
 
 **🔗 Relations :**
+- Champ `portfolio_id` lie vers `portfolio`
 - Champ `directus_files_id` lie vers `directus_files`
-- Champ `portfolio_id` lie vers `portfolio`
-
----
-
-### 📑 Collection : `portfolio_portfolio_files`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| directus_files_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `directus_files_id` lie vers `portfolio_files`
 
 ---
 
@@ -343,23 +320,6 @@ Généré le : 2026-01-10 01:27:18
 | Champ | Type | Interface | Note |
 | :--- | :--- | :--- | :--- |
 | id | integer | numeric |  |
-| portfolio_id | integer | None |  |
-| services_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `services_id` lie vers `services`
-
----
-
-### 📑 Collection : `portfolio_services_1`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
 | portfolio_id | integer | None |  |
 | services_id | integer | None |  |
 
@@ -386,40 +346,6 @@ Généré le : 2026-01-10 01:27:18
 
 ---
 
-### 📑 Collection : `portfolio_sub_services_1`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| sub_services_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `sub_services_id` lie vers `sub_services`
-
----
-
-### 📑 Collection : `portfolio_sub_services_2`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| sub_services_id | integer | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `sub_services_id` lie vers `sub_services`
-
----
-
 ### 📑 Collection : `portfolio_translations`
 - **Dossier parent** : `Portfolio` (`portfolio_group`)
 - **Statut UI** : ✅ VISIBLE
@@ -438,34 +364,6 @@ Généré le : 2026-01-10 01:27:18
 
 **🔗 Relations :**
 - Champ `portfolio_id` lie vers `portfolio`
-
----
-
-### 📑 Collection : `portfolio_translations_1`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-
----
-
-### 📑 Collection : `portfolio_translations_2`
-- **Dossier parent** : `Racine` (`None`)
-- **Statut UI** : 🚫 CACHÉE
-- **Icône** : import_export
-
-| Champ | Type | Interface | Note |
-| :--- | :--- | :--- | :--- |
-| id | integer | None |  |
-| portfolio_id | integer | None |  |
-| languages_code | string | None |  |
-
-**🔗 Relations :**
-- Champ `portfolio_id` lie vers `portfolio`
-- Champ `languages_code` lie vers `languages`
 
 ---
 
@@ -566,6 +464,34 @@ Généré le : 2026-01-10 01:27:18
 | video_id | string | input | ID YouTube (ex: dQw4w9WgXcQ) |
 | language | string | select-dropdown |  |
 | publish_date | timestamp | datetime |  |
+| podcast_fr | uuid | file | Podcast Français |
+| podcast_es | uuid | file | Podcast Espagnol |
+| podcast_en | uuid | file | Podcast Anglais |
+| infographic_square | uuid | file | Infographie Carrée (1:1) |
+| infographic_hor | uuid | file | Infographie Horizontale (16:9) |
+| infographic_vert | uuid | file | Infographie Verticale (9:16) |
+
+**🔗 Relations :**
+- Champ `infographic_hor` lie vers `directus_files`
+- Champ `infographic_square` lie vers `directus_files`
+- Champ `infographic_vert` lie vers `directus_files`
+
+---
+
+### 📑 Collection : `recreo_files`
+- **Dossier parent** : `Racine` (`recreo_content`)
+- **Statut UI** : 🚫 CACHÉE
+- **Icône** : insert_drive_file
+
+| Champ | Type | Interface | Note |
+| :--- | :--- | :--- | :--- |
+| id | integer | numeric |  |
+| directus_files_id | uuid | None |  |
+| recreo_content_id | integer | None |  |
+
+**🔗 Relations :**
+- Champ `recreo_content_id` lie vers `recreo_content`
+- Champ `directus_files_id` lie vers `directus_files`
 
 ---
 
@@ -587,7 +513,6 @@ Généré le : 2026-01-10 01:27:18
 | home_size | integer | select-relational |  |
 | page_size | integer | select-relational |  |
 | slug | string | slug |  |
-| portfolios | alias | list-m2m |  |
 | translations | alias | translations | Interface de traduction |
 | sub_services | alias | list-m2m | Liste des atomes sélectionnés |
 
@@ -651,7 +576,6 @@ Généré le : 2026-01-10 01:27:18
 | sort | integer | input | Manual sorting order |
 | page_size | integer | select-relational |  |
 | slug | string | slug |  |
-| portfolio_subs | alias | list-m2m |  |
 | translations | alias | translations | Interface de traduction |
 
 **🔗 Relations :**
