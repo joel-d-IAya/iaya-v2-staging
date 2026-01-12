@@ -56,7 +56,7 @@ export default function RecreoSection({ locale }: RecreoSectionProps) {
     );
 
     return (
-        <section id="recreo" className="py-32 bg-[oklch(0.17_0.01_240)] relative overflow-hidden">
+        <section id="recreo" className="py-32 recreo-bg relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-8 relative z-10">
                 <SectionHeader
                     intro={t.intro}

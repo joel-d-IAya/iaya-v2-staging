@@ -76,6 +76,19 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
+    position: relative;
+    z-index: 0;
+  }
+
+  .recreo-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        oklch(10% 0 0 / 0.6),
+        oklch(5% 0 0 / 0.8));
+    z-index: -1;
+    pointer-events: none;
   }
 }
 
