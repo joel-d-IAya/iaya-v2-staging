@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { fetchServiceBySlug, getLocalizedContent, getAccentColor } from '../services/api';
+import { ArrowLeft } from 'lucide-react';
+import { fetchServiceBySlug, getLocalizedContent, getAccentColor, getUiLabels, fetchAllServices } from '../services/api';
 import type { Service } from '../services/api';
 import DynamicIcon from '../components/ui/DynamicIcon';
+import SubServiceCard from '../components/SubServiceCard';
+import SubServiceDetails from '../components/SubServiceDetails';
+
+import NexoDrawer from '../components/NexoDrawer';
 
 interface ServicePageProps {
     activeLang: string;
@@ -12,27 +17,26 @@ interface ServicePageProps {
 const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
     const { serviceSlug, subServiceSlug } = useParams<{ serviceSlug: string; subServiceSlug?: string }>();
     const [service, setService] = useState<Service | null>(null);
+    const [allServices, setAllServices] = useState<Service[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    const ui = getUiLabels(activeLang);
 
     useEffect(() => {
         const load = async () => {
             if (!serviceSlug) return;
             setLoading(true);
-            const data = await fetchServiceBySlug(serviceSlug);
+            const [data, servicesData] = await Promise.all([
+                fetchServiceBySlug(serviceSlug),
+                fetchAllServices()
+            ]);
             setService(data);
+            setAllServices(servicesData);
             setLoading(false);
         };
         load();
     }, [serviceSlug]);
-
-    const cleanMarkdown = (text: string | undefined): string => {
-        if (!text) return '';
-        // Remove ### (headings) and ** (bold) markers correctly
-        return text
-            .replace(/###\s?/g, '') // Remove H3 markers
-            .replace(/\*\*/g, '')   // Remove bold markers
-            .trim();
-    };
 
     if (loading) {
         return (
@@ -63,6 +67,15 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
         return (
             <div className="min-h-screen bg-iaya-bg pt-32 pb-20">
                 <div className="max-w-4xl mx-auto px-8">
+                    {/* Back Link */}
+                    <Link
+                        to={`/servicios/${serviceSlug}`}
+                        className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors mb-8 group"
+                    >
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                        <span className="text-sm font-medium">{ui.back}</span>
+                    </Link>
+
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -79,25 +92,68 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
                         </h1>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="prose prose-invert prose-lg max-w-none font-inter text-white/80 leading-relaxed mb-20"
-                        dangerouslySetInnerHTML={{ __html: subContent.full_content || subContent.content || '' }}
+                    <SubServiceDetails
+                        translationData={subContent}
+                        accentColor={accentColor}
                     />
 
                     {/* CTA / Contact Form Placeholder */}
-                    <div className="bg-white/5 rounded-3xl p-12 border border-white/10 text-center">
-                        <h2 className="text-3xl font-outfit font-bold mb-6">¿Interesado en este servicio?</h2>
+                    <div className="bg-white/5 rounded-3xl p-12 border border-white/10 text-center mt-20 mb-20">
+                        <h2 className="text-3xl font-outfit font-bold mb-6">{ui.interestedHeader}</h2>
                         <button
-                            className="px-10 py-4 rounded-full font-outfit font-bold text-lg transition-all"
+                            onClick={() => setIsDrawerOpen(true)}
+                            className="px-10 py-4 rounded-full font-outfit font-bold text-lg transition-all active:scale-95 shadow-lg"
                             style={{ backgroundColor: accentColor, color: 'black' }}
                         >
-                            Contactar Ahora
+                            {ui.contactNow}
                         </button>
                     </div>
+
+                    {/* SEO / Internal Links Footer */}
+                    <div className="pt-16 border-t border-white/5">
+                        <h3 className="text-xl font-outfit font-bold mb-10 text-white/80">{ui.relatedLinksHeader}</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+                            {allServices.map(s => {
+                                const sContent = getLocalizedContent(s, activeLang);
+                                return (
+                                    <div key={s.id} className="space-y-4">
+                                        <Link
+                                            to={`/servicios/${s.slug}`}
+                                            className="text-lg font-bold hover:text-turquoise transition-colors block"
+                                            style={{ color: s.accent_color }}
+                                        >
+                                            {sContent.title}
+                                        </Link>
+                                        <ul className="space-y-2">
+                                            {s.sub_services?.map(sub => {
+                                                const subC = getLocalizedContent(sub, activeLang);
+                                                return (
+                                                    <li key={sub.id}>
+                                                        <Link
+                                                            to={`/servicios/${s.slug}/${sub.slug}`}
+                                                            className="text-sm text-white/40 hover:text-white transition-colors block"
+                                                        >
+                                                            {subC.title}
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
+
+                <NexoDrawer
+                    isOpen={isDrawerOpen}
+                    onClose={() => setIsDrawerOpen(false)}
+                    activeLang={activeLang}
+                    allServices={allServices}
+                    defaultServiceSlug={serviceSlug}
+                    defaultSubServiceSlug={subServiceSlug}
+                />
             </div>
         );
     }
@@ -158,45 +214,20 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             {service.sub_services.map((sub, idx) => {
-                                const subContent = getLocalizedContent(sub, activeLang);
                                 const subAccentColor = sub.accent_color ? getAccentColor(sub.accent_color) : accentColor;
                                 return (
-                                    <Link
+                                    <div
                                         key={sub.id}
-                                        to={`/servicios/${serviceSlug}/${sub.slug}`}
-                                        className={`${sub.page_size?.tailwind_class || (idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1')} block`}
+                                        className={sub.page_size?.tailwind_class || (idx % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1')}
                                     >
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: idx * 0.1 }}
-                                            className="h-full bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all group relative overflow-hidden flex flex-col"
-                                        >
-                                            <div
-                                                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                                                style={{ background: `linear-gradient(45deg, ${subAccentColor}, transparent)` }}
-                                            />
-
-                                            <DynamicIcon
-                                                name={sub.main_icon || 'Zap'}
-                                                color={subAccentColor}
-                                                size={32}
-                                                className="mb-6"
-                                            />
-                                            <h3 className="text-2xl font-outfit font-bold mb-4">{subContent.title}</h3>
-                                            <p className="text-white/60 font-inter mb-8 line-clamp-3">
-                                                {cleanMarkdown(subContent.summary || subContent.description)}
-                                            </p>
-
-                                            <div
-                                                className="mt-auto inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest group-hover:gap-4 transition-all"
-                                                style={{ color: subAccentColor }}
-                                            >
-                                                {activeLang === 'FR' ? 'Découvrir' : activeLang === 'EN' ? 'Discover' : 'Descubrir'} <span className="text-xl">→</span>
-                                            </div>
-                                        </motion.div>
-                                    </Link>
+                                        <SubServiceCard
+                                            subService={sub}
+                                            parentSlug={serviceSlug || ''}
+                                            locale={activeLang}
+                                            index={idx}
+                                            accentColor={subAccentColor}
+                                        />
+                                    </div>
                                 );
                             })}
                         </div>

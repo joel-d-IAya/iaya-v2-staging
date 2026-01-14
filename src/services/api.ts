@@ -22,6 +22,7 @@ export interface Translation {
     solution?: string;
     excerpt?: string;
     results_metrics?: string;
+    examples?: string[];
 }
 
 export interface Service {
@@ -140,7 +141,11 @@ export const getUiLabels = (currentLang: string) => {
         prevNews: 'Actualité précédente',
         exploreCaseStudy: 'Explorer le cas d\'étude',
         newsArchive: 'Actualités',
-        serviceDetails: 'Plus de détails sur ce service'
+        serviceDetails: 'Plus de détails sur ce service',
+        back: 'Retour',
+        interestedHeader: 'Intéressé par ce service ?',
+        contactNow: 'Contactez-nous',
+        relatedLinksHeader: 'Explorer plus de solutions'
     };
     if (lang === 'en') return {
         cta: 'Discover more',
@@ -155,7 +160,11 @@ export const getUiLabels = (currentLang: string) => {
         prevNews: 'Previous News',
         exploreCaseStudy: 'Explore Case Study',
         newsArchive: 'Archive',
-        serviceDetails: 'More details about this service'
+        serviceDetails: 'More details about this service',
+        back: 'Back',
+        interestedHeader: 'Interested in this service?',
+        contactNow: 'Contact Now',
+        relatedLinksHeader: 'Explore more solutions'
     };
     return {
         cta: 'Descubrir más',
@@ -170,7 +179,11 @@ export const getUiLabels = (currentLang: string) => {
         prevNews: 'Noticia anterior',
         exploreCaseStudy: 'Explorar Caso de Éxito',
         newsArchive: 'Noticias',
-        serviceDetails: 'Más detalles sobre este servicio'
+        serviceDetails: 'Más detalles sobre este servicio',
+        back: 'Volver',
+        interestedHeader: '¿Interesado en este servicio?',
+        contactNow: 'Contactar Ahora',
+        relatedLinksHeader: 'Explorar más soluciones'
     }; // Default to ES
 };
 
@@ -347,6 +360,16 @@ export const fetchPortfolioBySlug = async (slug: string) => {
         sub_services: subServicesJunctions?.map((j: any) => j.sub_services_id).filter((s: any) => s && (s.status === 'published' || !s.status)) || [],
         files: filesJunctions?.map((j: any) => j.directus_files_id).filter((f: any) => f) || []
     } as PortfolioItem;
+};
+
+export const submitProspect = async (payload: any) => {
+    const response = await fetch(`${API_URL}/items/prospects`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error('Failed to submit prospect');
+    return response.json();
 };
 
 /**

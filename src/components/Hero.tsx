@@ -536,12 +536,12 @@ export default function Hero({ locale = 'ES' }: { locale?: string }) {
                 }}
                 className="absolute left-0 w-full z-[60] pointer-events-none"
             >
-                <div className="mountain-container relative w-full flex justify-center translate-y-[-110px]">
+                <div className="mountain-container relative w-full flex justify-center translate-y-[-100px]">
                     <img
                         src={andes}
                         alt="Andes Mountains"
                         className="w-full max-w-7xl h-auto object-contain opacity-100 relative z-10"
-                        style={{ transform: 'translateY(-10px)' }}
+                        style={{ transform: 'translateY(85px)' }}
                     />
                     {/* Shadow/Anchor at the base */}
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-32 bg-radial-[at_50%_100%] from-[oklch(25%_0.02_250_/_0.3)] to-transparent blur-2xl -z-10" />

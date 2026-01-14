@@ -99,15 +99,14 @@ body {
 .mountain-container::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -100px;
+  /* Offset to ensure it covers even when translated */
   left: 0;
   right: 0;
-  height: 120px;
-  /* Adjust height based on visual depth */
+  height: 220px;
   background: linear-gradient(to bottom,
       transparent 0%,
-      oklch(15% 0.02 260 / 0.8) 100%);
+      oklch(15% 0.02 260 / 0.5) 100%);
   pointer-events: none;
   z-index: 25;
-  /* Should be above the mountain but below navigation */
 }
