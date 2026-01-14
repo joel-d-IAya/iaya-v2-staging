@@ -141,33 +141,6 @@ const NexoDrawer: React.FC<NexoDrawerProps> = ({
 
             await submitProspect(payload);
 
-            // Mailto Notification Generation (Matching NexoForm behavior)
-            const getLabel = (id: string) => {
-                if (id.startsWith('service_')) {
-                    const slug = id.replace('service_', '');
-                    const s = allServices.find(srv => srv.slug === slug);
-                    return s ? getLocalizedContent(s, activeLang).title : slug;
-                }
-                if (id.startsWith('sub_')) {
-                    const slug = id.replace('sub_', '');
-                    for (const s of allServices) {
-                        const sub = s.sub_services?.find(ss => ss.slug === slug);
-                        if (sub) return getLocalizedContent(sub, activeLang).title;
-                    }
-                    return slug;
-                }
-                return id;
-            };
-
-            const expectationsString = formData.expectations.map(getLabel).join(', ');
-            const mailSubject = `Nouveau Prospect IAya (Services) - ${formData.first_name} ${formData.last_name}`;
-            const mailBody = `Prénom: ${formData.first_name}\nNom: ${formData.last_name}\nEmail: ${formData.email}\nWhatsApp: ${formData.whatsapp}\nLangue: ${activeLang}\n\nServices d'intérêt: ${expectationsString}\n\nDescription du projet:\n${formData.project_description}\n\n(Détails techniques: Service: ${selectedServices} | Sous-service: ${selectedSubServices})`;
-
-            const mailtoUrl = `mailto:joel.devalez@gmail.com;joel@iaya.cloud?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-
-            // Note: window.location.href might prevent state update if not careful, but works for notification.
-            window.location.href = mailtoUrl;
-
             setStatus('success');
         } catch (err) {
             console.error(err);

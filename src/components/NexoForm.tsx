@@ -159,19 +159,6 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
             // 1. Centralized Directus POST
             await submitProspect(payload);
 
-            // 2. Mailto Generation
-            const expectationsString = expectationsList
-                .filter(ext => formData.expectations.includes(ext.id))
-                .map(ext => ext[locale.toLowerCase() as 'fr' | 'es' | 'en'] || ext.es)
-                .join(', ');
-
-            const mailSubject = `Nouveau Contact IAya - ${formData.first_name} ${formData.last_name}`;
-            const mailBody = `Prénom: ${formData.first_name}\nNom: ${formData.last_name}\nEmail: ${formData.email}\nWhatsApp: ${formData.whatsapp}\nAttentes: ${expectationsString}\n\nDescription:\n${formData.project_description}`;
-
-            const mailtoUrl = `mailto:joel.devalez@gmail.com;joel@iaya.cloud?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-
-            window.location.href = mailtoUrl;
-
             setStatus('success');
             // Reset form after success delay if needed or keep success state
         } catch (error) {
