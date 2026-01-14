@@ -61,7 +61,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ activeLang }) => {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-6xl md:text-8xl font-outfit font-black tracking-tighter leading-none mb-4 bg-gradient-to-br from-white to-white/40 bg-clip-text text-transparent"
+                        className="text-5xl md:text-7xl font-outfit font-black tracking-tighter leading-none mb-4 bg-gradient-to-br from-white to-white/40 bg-clip-text text-transparent"
                     >
                         {t.subtitle}
                     </motion.h1>
@@ -79,7 +79,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ activeLang }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg md:text-xl text-white/60 font-inter leading-relaxed mb-12"
+                        className="text-lg md:text-xl text-white/60 font-inter leading-relaxed mb-12 max-w-sm mx-auto"
                     >
                         {t.description}
                     </motion.p>
