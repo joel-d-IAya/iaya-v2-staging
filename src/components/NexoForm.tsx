@@ -150,7 +150,7 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
 
         const payload = {
             ...formData,
-            selected_service: null,
+            selected_service: formData.expectations.join(', '),
             selected_sub_service: null,
             language: langMap[locale] || 'es-ES'
         };
