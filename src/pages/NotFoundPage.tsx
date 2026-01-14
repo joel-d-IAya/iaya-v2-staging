@@ -55,25 +55,25 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ activeLang }) => {
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="relative z-10 max-w-2xl px-8 text-center"
+                className="relative z-10 max-w-4xl px-8 text-center"
             >
                 <div className="glass-2 p-12 md:p-20 rounded-[40px] border border-white/10 shadow-2xl">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-xl md:text-2xl font-outfit font-bold uppercase tracking-[0.3em] text-iaya-turquoise mb-4"
-                    >
-                        {t.title}
-                    </motion.h2>
-
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-8xl md:text-[150px] font-outfit font-black tracking-tighter leading-none mb-8 bg-gradient-to-br from-white to-white/40 bg-clip-text text-transparent"
+                        className="text-6xl md:text-8xl font-outfit font-black tracking-tighter leading-none mb-4 bg-gradient-to-br from-white to-white/40 bg-clip-text text-transparent"
                     >
                         {t.subtitle}
                     </motion.h1>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="text-xl md:text-2xl font-outfit font-bold uppercase tracking-[0.3em] text-iaya-turquoise mb-8"
+                    >
+                        {t.title}
+                    </motion.h2>
 
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
