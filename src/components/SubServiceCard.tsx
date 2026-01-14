@@ -35,7 +35,6 @@ const SubServiceCard: React.FC<SubServiceCardProps> = ({
     // Design Tokens from Brief (OKLCH)
     const drawerBg = 'oklch(0% 0 0 / 25%)';
     const drawerBorder = '1px solid oklch(100% 0 0 / 8%)';
-    const drawerShadow = 'shadow-[0_20px_50px_rgba(0,0,0,0.5)]'; // Tailwind utility or raw CSS
     const textContrast = '#E5E7EB'; // oklch(90% 0 0) equivalent
 
     // Motion Curves from Brief
