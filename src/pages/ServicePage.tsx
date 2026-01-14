@@ -9,6 +9,7 @@ import SubServiceCard from '../components/SubServiceCard';
 import SubServiceDetails from '../components/SubServiceDetails';
 
 import NexoDrawer from '../components/NexoDrawer';
+import NotFoundPage from './NotFoundPage';
 
 interface ServicePageProps {
     activeLang: string;
@@ -47,11 +48,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
     }
 
     if (!service) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-iaya-bg">
-                <h1 className="text-4xl font-outfit font-bold">Service Not Found</h1>
-            </div>
-        );
+        return <NotFoundPage activeLang={activeLang} />;
     }
 
     const content = getLocalizedContent(service, activeLang);
@@ -60,7 +57,7 @@ const ServicePage: React.FC<ServicePageProps> = ({ activeLang }) => {
     // If subServiceSlug is present, we are on a sub-service page
     if (subServiceSlug) {
         const subService = service.sub_services?.find(s => s.slug === subServiceSlug);
-        if (!subService) return <div className="min-h-screen flex items-center justify-center">Sub-service not found</div>;
+        if (!subService) return <NotFoundPage activeLang={activeLang} />;
 
         const subContent = getLocalizedContent(subService, activeLang);
 

@@ -6,3 +6,5 @@ Collection [el_recreo] status: 403
 Collection [elrecreo] status: 403
 Collection [youtube] status: 403
 Collection [videos] status: 403
+Collection [recreo_content] status: 200
+  Keys for [recreo_content]: id, title, video_id, language, publish_date, podcast_fr, podcast_es, podcast_en, infographic_square, infographic_hor, infographic_vert

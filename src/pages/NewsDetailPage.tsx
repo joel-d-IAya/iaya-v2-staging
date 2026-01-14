@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchAllNews, getLocalizedContent, type NewsItem, getAssetUrl, getUiLabels, toSlug } from '../services/api';
+import NotFoundPage from './NotFoundPage';
 
 const cleanMarkdown = (text: string | undefined): string => {
     if (!text) return '';
@@ -38,12 +39,7 @@ export default function NewsDetailPage({ activeLang }: { activeLang: string }) {
         </div>
     );
 
-    if (!item) return (
-        <div className="min-h-screen bg-iaya-bg flex flex-col items-center justify-center text-white px-8 text-center">
-            <h1 className="text-4xl font-outfit font-bold mb-4">News not found</h1>
-            <Link to="/noticias" className="text-iaya-orange hover:underline font-inter">← {labels.newsArchive}</Link>
-        </div>
-    );
+    if (!item) return <NotFoundPage activeLang={activeLang} />;
 
     const content = getLocalizedContent(item, activeLang);
     const currentIndex = allNews.findIndex(n => n.id === item.id);

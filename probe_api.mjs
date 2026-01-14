@@ -13,7 +13,7 @@ async function run() {
         const newsJson = await newsResponse.json();
         output += "Daily News Keys: " + Object.keys(newsJson.data[0] || {}).join(', ') + "\n";
 
-        const recreoSearch = ['recreo', 'recreos', 'el_recreo', 'elrecreo', 'youtube', 'videos'];
+        const recreoSearch = ['recreo', 'recreos', 'el_recreo', 'elrecreo', 'youtube', 'videos', 'recreo_content'];
         for (const name of recreoSearch) {
             const r = await fetch(`https://cms.iaya.cloud/items/${name}?limit=1`);
             output += `Collection [${name}] status: ${r.status}\n`;

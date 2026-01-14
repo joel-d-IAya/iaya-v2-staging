@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Loader2, MessageCircle } from 'lucide-react';
 import backgroundIncaStones from '../assets/background-inca-stones.png';
 import SectionHeader from './SectionHeader';
+import { submitProspect } from '../services/api';
 
 interface NexoFormProps {
     locale: string;
@@ -149,18 +150,14 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
 
         const payload = {
             ...formData,
+            selected_service: null,
+            selected_sub_service: null,
             language: langMap[locale] || 'es-ES'
         };
 
         try {
-            // 1. Directus POST
-            const response = await fetch('https://cms.iaya.cloud/items/prospects', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) throw new Error('API Error');
+            // 1. Centralized Directus POST
+            await submitProspect(payload);
 
             // 2. Mailto Generation
             const expectationsString = expectationsList

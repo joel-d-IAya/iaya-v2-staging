@@ -1,0 +1,11 @@
+﻿
+> iaya-v2@0.0.0 build
+> tsc -b && vite build
+
+src/components/PortfolioCard.tsx(118,46): error TS2339: Property 'excerpt' does not exist on type 'Translation'.
+src/pages/PortfolioDetailPage.tsx(112,46): error TS2339: Property 'excerpt' does not exist on type 'Translation'.
+src/pages/PortfolioDetailPage.tsx(114,54): error TS2339: Property 'excerpt' does not exist on type 'Translation'.
+src/pages/PortfolioDetailPage.tsx(134,80): error TS2339: Property 'challenge' does not exist on type 'Translation'.
+src/pages/PortfolioDetailPage.tsx(149,80): error TS2339: Property 'solution' does not exist on type 'Translation'.
+src/pages/PortfolioDetailPage.tsx(251,38): error TS2339: Property 'results_metrics' does not exist on type 'Translation'.
+src/pages/PortfolioDetailPage.tsx(255,50): error TS2339: Property 'results_metrics' does not exist on type 'Translation'.

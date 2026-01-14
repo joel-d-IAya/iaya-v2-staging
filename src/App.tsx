@@ -10,6 +10,7 @@ import PortfolioDetailPage from './pages/PortfolioDetailPage'
 import PortfolioPage from './pages/PortfolioPage'
 import RecreoPage from './pages/RecreoPage'
 import OrigenPage from './pages/OrigenPage'
+import NotFoundPage from './pages/NotFoundPage'
 import { initApp } from './services/api'
 import logo from './assets/topnav_IAya.png'
 
@@ -51,6 +52,7 @@ function App() {
           <Route path="/recreo" element={<RecreoPage activeLang={activeLang} />} />
           <Route path="/origen" element={<OrigenPage activeLang={activeLang} />} />
           <Route path="/contacto" element={<OrigenPage activeLang={activeLang} />} />
+          <Route path="*" element={<NotFoundPage activeLang={activeLang} />} />
         </Routes>
 
         {/* Footer Signature */}

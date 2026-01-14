@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { fetchPortfolio, type PortfolioItem } from '../services/api';
 import PortfolioCard from './PortfolioCard';
 import SectionHeader from './SectionHeader';
+import portfolioBg from '../assets/portfolio_bg.jpg';
 
 const TEXTS: Record<string, { title: string, subtitle: string, cta: string, intro: string }> = {
     ES: {
@@ -60,7 +61,14 @@ export default function PortfolioGrid({ locale }: { locale: string }) {
     if (portfolio.length === 0) return null;
 
     return (
-        <section id="portfolio" className="py-32 bg-[oklch(0.13_0.01_240)] relative overflow-hidden">
+        <section id="portfolio" className="py-24 bg-[oklch(0.13_0.01_240)] relative overflow-hidden">
+            {/* Background Image with Overlay */}
+            <div
+                className="absolute inset-0 z-0 opacity-[0.3] pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${portfolioBg})` }}
+            />
+            <div className="absolute inset-0 z-0 bg-gradient-to-b from-iaya-bg via-transparent to-iaya-bg opacity-80 pointer-events-none" />
+
             {/* Background elements for depth */}
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-iaya-turquoise/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
 
@@ -120,8 +128,8 @@ export default function PortfolioGrid({ locale }: { locale: string }) {
                 </div>
 
                 {/* Vertical Separator */}
-                <div className="mt-32 flex justify-center">
-                    <div className="w-px h-32 bg-gradient-to-b from-iaya-turquoise/30 via-iaya-turquoise/5 to-transparent" />
+                <div className="mt-16 flex justify-center">
+                    <div className="w-px h-20 bg-gradient-to-b from-iaya-turquoise/30 via-iaya-turquoise/5 to-transparent" />
                 </div>
             </div>
         </section>

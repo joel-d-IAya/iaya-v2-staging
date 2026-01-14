@@ -123,6 +123,8 @@ const NexoDrawer: React.FC<NexoDrawerProps> = ({
         try {
             await submitProspect({
                 ...formData,
+                selected_service: defaultServiceSlug || null,
+                selected_sub_service: defaultSubServiceSlug || null,
                 language: activeLang.toLowerCase() === 'es' ? 'es-ES' : activeLang.toLowerCase() === 'fr' ? 'fr-FR' : 'en-US'
             });
             setStatus('success');

@@ -10,6 +10,7 @@ import {
     type PortfolioItem
 } from '../services/api';
 import * as LucideIcons from 'lucide-react';
+import NotFoundPage from './NotFoundPage';
 
 const SIDEBAR_TEXTS: Record<string, any> = {
     ES: { challenge: 'El Desafío', solution: 'La Solución', builtWith: 'Construido con', metrics: 'Métricas & Resultados', back: 'Volver al Portafolio', live: 'Explorar Proyecto live', showcase: 'Galería del Proyecto', docs: 'Documentos del Proyecto' },
@@ -39,12 +40,7 @@ export default function PortfolioDetailPage({ activeLang }: { activeLang: string
         </div>
     );
 
-    if (!item) return (
-        <div className="min-h-screen bg-iaya-bg flex flex-col items-center justify-center text-white p-8 px-8">
-            <h1 className="text-4xl font-outfit font-bold mb-4">Project not found</h1>
-            <Link to="/portafolio" className="text-iaya-turquoise hover:underline">Back to Portfolio</Link>
-        </div>
-    );
+    if (!item) return <NotFoundPage activeLang={activeLang} />;
 
     const content = getLocalizedContent(item, activeLang);
     const accentColor = getAccentColor(item.accent_color);

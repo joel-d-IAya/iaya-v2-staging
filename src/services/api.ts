@@ -363,13 +363,28 @@ export const fetchPortfolioBySlug = async (slug: string) => {
 };
 
 export const submitProspect = async (payload: any) => {
+    const token = import.meta.env.VITE_DIRECTUS_TOKEN;
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+    };
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const response = await fetch(`${API_URL}/items/prospects`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(payload)
     });
-    if (!response.ok) throw new Error('Failed to submit prospect');
-    return response.json();
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Failed to submit prospect: ${response.status} ${text}`);
+    }
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+        return response.json();
+    }
+    return {};
 };
 
 /**
