@@ -149,9 +149,12 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
         setStatus('submitting');
 
         const payload = {
-            ...formData,
-            selected_service: formData.expectations.join(', '),
-            selected_sub_service: null,
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            email: formData.email,
+            whatsapp: formData.whatsapp,
+            expectations: formData.expectations,
+            project_description: formData.project_description,
             language: langMap[locale] || 'es-ES'
         };
 
@@ -159,8 +162,39 @@ const NexoForm: React.FC<NexoFormProps> = ({ locale }) => {
             // 1. Centralized Directus POST
             await submitProspect(payload);
 
+            // 2. Trigger Mailto (Action B)
+            const subject = encodeURIComponent(`Nouveau Contact IAya - ${formData.first_name} ${formData.last_name}`);
+            const selectedExpectations = expectationsList
+                .filter(e => formData.expectations.includes(e.id))
+                .map(e => e[locale.toLowerCase() as 'fr' | 'es' | 'en'] || e.es)
+                .join('\n- ');
+
+            const body = encodeURIComponent(
+                `Bonjour,\n\n` +
+                `Un nouveau prospect a rempli le formulaire de contact :\n\n` +
+                `Nom : ${formData.first_name} ${formData.last_name}\n` +
+                `Email : ${formData.email}\n` +
+                `WhatsApp : ${formData.whatsapp}\n\n` +
+                `Attentes :\n- ${selectedExpectations}\n\n` +
+                `Description du projet :\n${formData.project_description}\n\n` +
+                `Langue : ${langMap[locale] || 'es-ES'}`
+            );
+
+            const mailtoUrl = `mailto:joel.devalez@gmail.com;joel@iaya.cloud?subject=${subject}&body=${body}`;
+
+            // Open mail client
+            window.location.href = mailtoUrl;
+
             setStatus('success');
-            // Reset form after success delay if needed or keep success state
+            // Reset form after success
+            setFormData({
+                first_name: '',
+                last_name: '',
+                email: '',
+                whatsapp: '+593 ',
+                expectations: [],
+                project_description: ''
+            });
         } catch (error) {
             console.error('Submission error:', error);
             setStatus('error');

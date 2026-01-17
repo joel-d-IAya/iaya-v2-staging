@@ -7,6 +7,7 @@ export default function RecreoPage({ activeLang }: { activeLang: string }) {
     const [recreo, setRecreo] = useState<RecreoItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [playingPodcast, setPlayingPodcast] = useState<string | null>(null);
 
     useEffect(() => {
         fetchRecreo().then(data => {
@@ -183,6 +184,16 @@ export default function RecreoPage({ activeLang }: { activeLang: string }) {
 
                             {/* Video Player */}
                             <div className="relative aspect-video rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] bg-black">
+                                {playingPodcast && (
+                                    <audio
+                                        key={playingPodcast}
+                                        src={playingPodcast}
+                                        autoPlay
+                                        controls
+                                        className="absolute top-4 left-1/2 -translate-x-1/2 z-50 w-[80%] opacity-80 hover:opacity-100 transition-opacity rounded-full h-10"
+                                        onEnded={() => setPlayingPodcast(null)}
+                                    />
+                                )}
                                 {selectedItem?.video_id ? (
                                     <iframe
                                         width="100%"
@@ -234,14 +245,27 @@ export default function RecreoPage({ activeLang }: { activeLang: string }) {
                                                             className={`flex items-center bg-white/5 border border-white/10 rounded-full transition-all group/pod ${lang.file ? 'hover:border-iaya-orange/30' : 'opacity-20 grayscale'}`}
                                                         >
                                                             <button
-                                                                onClick={() => lang.file && window.open(getAssetUrl(lang.file), '_blank')}
+                                                                onClick={() => {
+                                                                    const url = getAssetUrl(lang.file);
+                                                                    console.log("Audio Source (Page):", url);
+                                                                    if (playingPodcast === url) setPlayingPodcast(null);
+                                                                    else setPlayingPodcast(url);
+                                                                }}
                                                                 disabled={!lang.file}
                                                                 className={`flex items-center gap-3 pl-6 pr-4 py-3 font-outfit font-bold uppercase text-[10px] tracking-[0.2em] transition-all ${lang.file
-                                                                    ? 'text-white hover:text-iaya-orange'
+                                                                    ? (playingPodcast === getAssetUrl(lang.file) ? 'text-iaya-orange' : 'text-white hover:text-iaya-orange')
                                                                     : 'cursor-not-allowed'
                                                                     }`}
                                                             >
-                                                                <Play size={12} fill={lang.file ? "currentColor" : "none"} />
+                                                                {playingPodcast === getAssetUrl(lang.file) ? (
+                                                                    <div className="flex gap-0.5 items-end h-3 mr-1">
+                                                                        <motion.div animate={{ height: [2, 8, 2] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-0.5 bg-iaya-orange" />
+                                                                        <motion.div animate={{ height: [4, 10, 4] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.1 }} className="w-0.5 bg-iaya-orange" />
+                                                                        <motion.div animate={{ height: [2, 6, 2] }} transition={{ repeat: Infinity, duration: 0.5, delay: 0.2 }} className="w-0.5 bg-iaya-orange" />
+                                                                    </div>
+                                                                ) : (
+                                                                    <Play size={12} fill={lang.file ? "currentColor" : "none"} />
+                                                                )}
                                                                 {lang.label}
                                                             </button>
                                                             <div className="w-[1px] h-4 bg-white/10" />

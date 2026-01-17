@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import NexoForm from '../components/NexoForm';
 
 export default function ContactoPage({ activeLang }: { activeLang: string }) {
     const titles: Record<string, string> = {
@@ -23,9 +24,8 @@ export default function ContactoPage({ activeLang }: { activeLang: string }) {
                     {activeLang === 'FR' && "Vous souhaitez mieux connaître notre écosystème ? Planifions une séance de découverte dès aujourd'hui."}
                 </p>
 
-                <div className="mt-20 p-12 rounded-[40px] border border-white/10 bg-white/5 backdrop-blur-xl max-w-xl mx-auto">
-                    <p className="text-iaya-orange font-outfit font-bold uppercase tracking-widest text-xs mb-4">Under Construction</p>
-                    <p className="text-white/80">hola@iaya.cloud</p>
+                <div className="mt-20">
+                    <NexoForm locale={activeLang} />
                 </div>
 
                 <div className="mt-20 flex justify-center">

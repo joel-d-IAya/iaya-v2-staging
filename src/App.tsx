@@ -10,6 +10,7 @@ import PortfolioDetailPage from './pages/PortfolioDetailPage'
 import PortfolioPage from './pages/PortfolioPage'
 import RecreoPage from './pages/RecreoPage'
 import OrigenPage from './pages/OrigenPage'
+import ContactoPage from './pages/ContactoPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Footer from './components/Footer'
 import { initApp } from './services/api'
@@ -51,7 +52,7 @@ function App() {
           <Route path="/portafolio/:slug" element={<PortfolioDetailPage activeLang={activeLang} />} />
           <Route path="/recreo" element={<RecreoPage activeLang={activeLang} />} />
           <Route path="/origen" element={<OrigenPage activeLang={activeLang} />} />
-          <Route path="/contacto" element={<OrigenPage activeLang={activeLang} />} />
+          <Route path="/contacto" element={<ContactoPage activeLang={activeLang} />} />
           <Route path="*" element={<NotFoundPage activeLang={activeLang} />} />
         </Routes>
 

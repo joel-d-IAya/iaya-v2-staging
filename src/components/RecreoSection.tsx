@@ -19,6 +19,7 @@ export default function RecreoSection({ locale }: RecreoSectionProps) {
     const [, setRecreo] = useState<RecreoItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedItem, setSelectedItem] = useState<RecreoItem | null>(null);
+    const [playingPodcast, setPlayingPodcast] = useState<string | null>(null);
 
     useEffect(() => {
         fetchRecreo().then(data => {
@@ -47,6 +48,19 @@ export default function RecreoSection({ locale }: RecreoSectionProps) {
     const handleDownload = (lang: 'ES' | 'FR' | 'EN') => {
         const url = podcastFiles?.[lang];
         if (url) window.open(url + '&download', '_blank');
+    };
+
+    const togglePlay = (lang: 'ES' | 'FR' | 'EN') => {
+        const url = podcastFiles?.[lang];
+        if (!url) return;
+
+        console.log("Audio Source (Section):", url);
+
+        if (playingPodcast === url) {
+            setPlayingPodcast(null);
+        } else {
+            setPlayingPodcast(url);
+        }
     };
 
     if (loading) return (
@@ -95,17 +109,27 @@ export default function RecreoSection({ locale }: RecreoSectionProps) {
                                 {(['ES', 'FR', 'EN'] as const).map((lang) => (
                                     <div key={lang} className="flex flex-col gap-2">
                                         <button
-                                            onClick={() => podcastFiles?.[lang] && window.open(podcastFiles[lang], '_blank')}
+                                            onClick={() => togglePlay(lang)}
                                             disabled={!podcastFiles?.[lang]}
                                             className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-all duration-300 border border-white/5 ${podcastFiles?.[lang]
-                                                ? 'bg-white/5 hover:bg-iaya-orange/20 hover:border-iaya-orange/30 group/btn'
+                                                ? (playingPodcast === podcastFiles[lang]
+                                                    ? 'bg-iaya-orange/30 border-iaya-orange/50'
+                                                    : 'bg-white/5 hover:bg-iaya-orange/20 hover:border-iaya-orange/30') + ' group/btn'
                                                 : 'opacity-20 cursor-not-allowed'
                                                 }`}
                                         >
                                             <span className={`font-outfit font-bold text-lg ${podcastFiles?.[lang] ? 'text-white' : 'text-white/40'}`}>
                                                 {lang}
                                             </span>
-                                            <Play size={18} fill={podcastFiles?.[lang] ? "currentColor" : "none"} className={podcastFiles?.[lang] ? 'text-iaya-turquoise' : ''} />
+                                            {playingPodcast === podcastFiles?.[lang] ? (
+                                                <div className="flex gap-1 items-end h-4 mb-1">
+                                                    <motion.div animate={{ height: [4, 12, 4] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-1 bg-iaya-orange" />
+                                                    <motion.div animate={{ height: [8, 16, 8] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.1 }} className="w-1 bg-iaya-orange" />
+                                                    <motion.div animate={{ height: [4, 10, 4] }} transition={{ repeat: Infinity, duration: 0.5, delay: 0.2 }} className="w-1 bg-iaya-orange" />
+                                                </div>
+                                            ) : (
+                                                <Play size={18} fill={podcastFiles?.[lang] ? "currentColor" : "none"} className={podcastFiles?.[lang] ? 'text-iaya-turquoise' : ''} />
+                                            )}
                                         </button>
                                         <button
                                             onClick={() => handleDownload(lang)}
@@ -116,7 +140,7 @@ export default function RecreoSection({ locale }: RecreoSectionProps) {
                                                 }`}
                                         >
                                             <Download size={10} />
-                                            <span>MMP3</span>
+                                            <span>MP3</span>
                                         </button>
                                     </div>
                                 ))}
@@ -140,6 +164,17 @@ export default function RecreoSection({ locale }: RecreoSectionProps) {
                         whileInView={{ opacity: 1, scale: 1 }}
                         className="relative aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 group bg-black/40"
                     >
+                        {/* Audio Player (Hidden control, dynamic source) */}
+                        {playingPodcast && (
+                            <audio
+                                key={playingPodcast}
+                                src={playingPodcast}
+                                autoPlay
+                                controls
+                                className="absolute top-4 left-1/2 -translate-x-1/2 z-50 w-[80%] opacity-80 hover:opacity-100 transition-opacity rounded-full h-10"
+                                onEnded={() => setPlayingPodcast(null)}
+                            />
+                        )}
                         {videoId ? (
                             <iframe
                                 width="100%"

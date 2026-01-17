@@ -14,7 +14,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.iaya-prod.rule=Host(`iaya.cloud`) || Host(`www.iaya.cloud`)"
       - "traefik.http.routers.iaya-prod.entrypoints=websecure"
-      - "traefik.http.routers.iaya-prod.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.iaya-prod.tls.certresolver=mytlschallenge"
       - "traefik.http.services.iaya-prod.loadbalancer.server.port=80"
 
 networks:
